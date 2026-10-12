@@ -1,0 +1,4 @@
+*.pdf
+*.ipynb
+.claude/
+.DS_Store
