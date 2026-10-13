@@ -461,6 +461,75 @@ details.cellout > img.nbimg { margin-top: .5rem; width: 100%; height: auto; }
 .strip figure canvas.px { cursor: pointer; }
 .cmpx figcaption b { font-family: var(--font-mono); }
 #a8-tok .nd.lit { border-color: var(--data); background: color-mix(in srgb, var(--data) 12%, var(--surface)); }
+
+/* ---------- static visual components for the prologue ---------- */
+.lead { font-size: 1.12rem; max-width: var(--measure); margin: .6rem 0 1rem; }
+.vlabel { font-family: var(--font-display); font-weight: 700; font-size: .76rem; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin: 1.4rem 0 .5rem; }
+.vlabel .katex { text-transform: none; }
+.vgrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(12.5rem, 1fr)); gap: .75rem; margin: .5rem 0 1.2rem; max-width: var(--wide); }
+.vgrid.two { grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr)); }
+.vgrid.three { grid-template-columns: repeat(auto-fit, minmax(14.5rem, 1fr)); }
+.vcard { background: var(--surface); border: 1px solid var(--rule); border-radius: 12px; padding: .8rem .95rem .85rem; min-width: 0; position: relative; }
+.vcard.atk { border-top: 3px solid var(--noise); }
+.vcard.def { border-top: 3px solid var(--model); }
+.vcard.ok { border-top: 3px solid var(--data); }
+.vcard.c2 { border-top: 3px solid var(--c2); }
+.vcard .vic { width: 2.3rem; height: 2.3rem; border-radius: 9px; display: grid; place-items: center; margin-bottom: .45rem; background: var(--sunk); color: var(--ink); }
+.vcard.atk .vic { color: var(--noise); background: color-mix(in srgb, var(--noise) 12%, var(--surface)); }
+.vcard.def .vic { color: var(--model); background: color-mix(in srgb, var(--model) 12%, var(--surface)); }
+.vcard.ok .vic { color: var(--data); background: color-mix(in srgb, var(--data) 12%, var(--surface)); }
+.vcard.c2 .vic { color: var(--c2); background: color-mix(in srgb, var(--c2) 12%, var(--surface)); }
+.vcard .vic svg { width: 1.35rem; height: 1.35rem; }
+.vcard .vn { position: absolute; top: .7rem; right: .85rem; font-family: var(--font-mono); font-size: .72rem; color: var(--muted); }
+.vcard .vt { font-family: var(--font-display); font-weight: 700; font-size: .95rem; line-height: 1.25; margin-bottom: .25rem; }
+.vcard .vd { font-size: .9rem; line-height: 1.45; color: var(--ink); }
+.vcard .vd p { margin: .25rem 0; }
+.vcard .vf { margin-top: .55rem; display: flex; flex-wrap: wrap; gap: .3rem; }
+.vcard .katex-display { margin: .35rem 0; font-size: .92em; }
+.vcard .big { font-family: var(--font-display); font-weight: 800; font-size: 1.35rem; line-height: 1.1; }
+.tagp { font-family: var(--font-display); font-size: .7rem; font-weight: 700; padding: .12rem .5rem; border-radius: 999px; border: 1px solid currentColor; white-space: nowrap; }
+.tagp.y { color: var(--noise); } .tagp.n { color: var(--data); } .tagp.m { color: var(--muted); } .tagp.b { color: var(--model); }
+.pipe { display: flex; flex-wrap: wrap; align-items: stretch; gap: .35rem .3rem; margin: .7rem 0 .4rem; max-width: var(--wide); }
+.pipe .pb { flex: 1 1 7.5rem; min-width: 0; border: 1.5px solid var(--rule); border-radius: 10px; background: var(--surface); padding: .5rem .6rem; text-align: center; font-family: var(--font-display); font-size: .84rem; line-height: 1.3; display: flex; flex-direction: column; justify-content: center; gap: .15rem; }
+.pipe .pb small { display: block; color: var(--muted); font-size: .74rem; font-weight: 500; }
+.pipe .pb.atk { border-color: var(--noise); background: color-mix(in srgb, var(--noise) 8%, var(--surface)); }
+.pipe .pb.def { border-color: var(--model); background: color-mix(in srgb, var(--model) 8%, var(--surface)); }
+.pipe .pb.ok { border-color: var(--data); background: color-mix(in srgb, var(--data) 8%, var(--surface)); }
+.pipe .pb.dim { opacity: .7; border-style: dashed; }
+.pipe .pa { align-self: center; color: var(--muted); font-size: 1.1rem; flex: 0 0 auto; }
+.pipe-cap { font-family: var(--font-display); font-size: .82rem; color: var(--muted); margin: 0 0 1.1rem; max-width: var(--wide); }
+.brace { display: flex; gap: .3rem; max-width: var(--wide); font-family: var(--font-display); font-size: .74rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
+.brace span { border-top: 2px solid currentColor; padding-top: .2rem; text-align: center; }
+.nest { border: 2px solid var(--noise); border-radius: 14px; padding: .7rem .9rem .9rem; margin: .8rem 0 1rem; max-width: var(--wide); background: color-mix(in srgb, var(--noise) 5%, var(--surface)); }
+.nest > .nh2 { font-family: var(--font-display); font-weight: 700; font-size: .78rem; letter-spacing: .1em; text-transform: uppercase; color: var(--noise); }
+.nest .inner { border: 2px solid var(--model); border-radius: 11px; padding: .55rem .8rem .6rem; margin-top: .55rem; background: color-mix(in srgb, var(--model) 6%, var(--surface)); }
+.nest .inner > .nh2 { font-family: var(--font-display); font-weight: 700; font-size: .78rem; letter-spacing: .1em; text-transform: uppercase; color: var(--model); }
+.nest .katex-display { margin: .3rem 0; }
+.nest .loopnote { font-family: var(--font-display); font-size: .82rem; color: var(--muted); margin-top: .5rem; }
+.vs2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); gap: .75rem; margin: .6rem 0 1.1rem; max-width: var(--wide); }
+.chips { display: flex; flex-wrap: wrap; gap: .4rem; margin: .5rem 0 1rem; max-width: var(--wide); }
+.chips .chip { font-family: var(--font-display); font-size: .8rem; padding: .3rem .65rem; border-radius: 8px; }
+.chips .chip small { color: var(--muted); margin-left: .3rem; }
+.quote { border-left: 4px solid var(--model); padding: .5rem 1rem; margin: 1rem 0; max-width: var(--measure); font-family: var(--font-display); font-size: 1.02rem; background: color-mix(in srgb, var(--model) 6%, var(--surface)); border-radius: 0 10px 10px 0; }
+.quote small { display: block; color: var(--muted); font-size: .78rem; margin-top: .2rem; }
+.xform { font-family: var(--font-display); font-size: .86rem; display: flex; align-items: center; gap: .4rem; flex-wrap: wrap; margin: .3rem 0; }
+.xform .arrow { color: var(--muted); }
+table.cmp.tight td, table.cmp.tight th { padding: .38rem .5rem; font-size: .9rem; }
+table.cmp td .tagp { font-size: .66rem; }
+.stat2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); gap: .75rem; margin: .6rem 0 1rem; max-width: var(--wide); }
+.stat2 .vcard .katex-display { font-size: .95em; }
+.vgrid { grid-template-columns: repeat(auto-fit, minmax(9.2rem, 1fr)); }
+.pipe { flex-wrap: nowrap; overflow-x: auto; padding-bottom: .2rem; }
+.pipe .pb { flex: 1 1 0; min-width: 5.2rem; padding: .45rem .4rem; font-size: .8rem; }
+.pipe .pb small { font-size: .7rem; }
+.pipe .pa { font-size: .95rem; }
+@media (max-width: 560px) {
+  .pipe { flex-direction: column; align-items: stretch; overflow: visible; }
+  .pipe .pb { flex: 0 0 auto; }
+  .pipe .pa { transform: rotate(90deg); align-self: center; line-height: 1; }
+}
+.vgrid.three { grid-template-columns: repeat(auto-fit, minmax(11.4rem, 1fr)); }
+.xform { display: block; color: var(--data); font-weight: 600; font-size: .8rem; margin: .1rem 0 .4rem; line-height: 1.35; } .xform .arrow { margin: 0 .25rem; }
 </style>
 </head>
 <body>
@@ -544,21 +613,21 @@ details.cellout > img.nbimg { margin-top: .5rem; width: 100%; height: auto; }
 <section id="a1">
   <div class="eyebrow">Prologue · Lecture 19, slides 3–6</div>
   <h2>A1 · Training-time attacks: what the attacker changes</h2>
-  <div class="prose">
-    <p>Last week's attacks changed the <b>test input</b> \(x\). A training-time attack instead changes what the model learns: the training data \(\mathcal D\), the training procedure \(\mathcal A\), or the parameters \(\theta\) directly (slide 3).</p>
-    <p>Slide 3 lists four goals:</p>
-    <ol>
-      <li>a slower, costlier model;</li>
-      <li>a model that is worse on all inputs;</li>
-      <li>a model that is worse on chosen inputs;</li>
-      <li>a hidden behaviour that the attacker can switch on later (a <b>backdoor</b>).</li>
-    </ol>
-    <p>Each training record is a pair \((x, y)\). Slide 5 sorts poisons by which part the attacker changes:</p>
-    <ul>
-      <li><b>Label flipping</b> changes \(y\). The record is now wrongly labelled.</li>
-      <li><b>Clean-label poisoning</b> changes \(x\) slightly and keeps the correct \(y\), so a human audit of labels finds nothing.</li>
-      <li><b>Backdoor poisoning</b> adds a trigger to \(x\) and sets the attacker's target label.</li>
-    </ul>
+  <p class="lead">Last week's attacks changed the test input. A training-time attack changes <b>what the model learns</b> (slide 3).</p>
+  <div class="pipe"><div class="pb atk">Training data \(\mathcal D\)<small>poisoning</small></div><span class="pa">→</span><div class="pb atk">Training procedure \(\mathcal A\)<small>order, energy</small></div><span class="pa">→</span><div class="pb atk">Parameters \(\theta\)<small>shared models</small></div><span class="pa">→</span><div class="pb dim">Test input \(x\)<small>last week</small></div><span class="pa">→</span><div class="pb ">Prediction</div></div>
+  <p class="pipe-cap">Orange: what a training-time attacker can touch. Dashed: where last week's test-time attacker acted.</p>
+  <div class="vlabel">Four attacker goals (slide 3)</div>
+  <div class="vgrid">
+    <div class="vcard atk"><span class="vn">1</span><div class="vic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div><div class="vt">Slower, costlier model</div><div class="vd">Every prediction costs more energy and time.</div></div>
+    <div class="vcard atk"><span class="vn">2</span><div class="vic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 5l6 6 4-4 8 8"/><path d="M21 9v6h-6"/></svg></div><div class="vt">Worse on all inputs</div><div class="vd">Accuracy drops for every class, e.g. \(95\% \to 70\%\).</div></div>
+    <div class="vcard atk"><span class="vn">3</span><div class="vic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.2"/></svg></div><div class="vt">Worse on chosen inputs</div><div class="vd">One target fails; everything else looks normal.</div></div>
+    <div class="vcard atk"><span class="vn">4</span><div class="vic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="7.5" cy="12" r="4"/><path d="M11.5 12H21M18 12v3M21 12v2"/></svg></div><div class="vt">Hidden behaviour</div><div class="vd">A backdoor the attacker switches on later with a trigger.</div></div>
+  </div>
+  <div class="vlabel">Three ways to poison a record \((x, y)\) (slide 5)</div>
+  <div class="vgrid three">
+    <div class="vcard c2"><div class="vic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 12V4h8l10 10-8 8z"/><circle cx="7.5" cy="8.5" r="1.3"/></svg></div><div class="vt">Label flipping</div><div class="vd"><p>$$(x,\ y) \to (x,\ y')$$</p><p>Same input, wrong label.</p></div><div class="vf"><span class="tagp y">wrong label</span><span class="tagp n">no trigger needed</span></div></div>
+    <div class="vcard ok"><div class="vic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 16l5-5 4 4 3-3 6 6"/><circle cx="16" cy="9" r="1.5"/></svg></div><div class="vt">Clean-label</div><div class="vd"><p>$$(x,\ y) \to (x + \delta,\ y)$$</p><p>Slightly changed input, correct label: a label audit finds nothing.</p></div><div class="vf"><span class="tagp n">label correct</span><span class="tagp n">no trigger needed</span></div></div>
+    <div class="vcard atk"><div class="vic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><rect x="5.5" y="13.5" width="4.5" height="4.5" fill="currentColor" stroke="none"/></svg></div><div class="vt">Backdoor</div><div class="vd"><p>$$(x,\ y) \to (x \oplus \text{trigger},\ y_t)$$</p><p>Trigger added, label set to the attacker's target.</p></div><div class="vf"><span class="tagp y">label often wrong</span><span class="tagp y">trigger at test time</span></div></div>
   </div>
   <div class="fig">
     <div class="fig-title"><span class="tag">Interactive</span>A few bad records move the boundary (slide 4)</div>
@@ -577,19 +646,30 @@ details.cellout > img.nbimg { margin-top: .5rem; width: 100%; height: auto; }
 <section id="a2">
   <div class="eyebrow">Prologue · Lecture 19, slides 7–19</div>
   <h2>A2 · Optimised poisons: two nested problems</h2>
-  <div class="prose">
-    <p>Choosing the most harmful poison is a <b>bilevel</b> problem: one optimisation nested inside another (slide 7). The defender trains on the poisoned data, and the attacker picks the poison that makes the trained model worst:</p>
-    $$\max_{x_c}\ L\big(\mathcal D_{\text{val}};\ w^\star\big) \quad\text{subject to}\quad w^\star = \arg\min_{w}\ L\big(\mathcal D_{\text{tr}} \cup \{(x_c, y_c)\};\ w\big).$$
-    <p>Biggio et al. solved it for a support vector machine by gradient ascent on \(x_c\), retraining after each step.<sup class="cite"><a href="#ref-biggio">1</a></sup> The SVM's optimality conditions give that gradient exactly (slide 8).</p>
-    <p>For deep networks, two cheaper objectives replace the bilevel problem:</p>
-    <ul>
-      <li><b>Poison Frogs</b> (feature collision).<sup class="cite"><a href="#ref-frogs">2</a></sup> Make the poison's features \(f(x)\) match the target \(t\)'s features, while the pixels stay close to a base image \(b\) of the poison class:
-      $$\min_{x}\ \lVert f(x) - f(t)\rVert_2^2 + \beta\,\lVert x - b\rVert_2^2 .$$
-      This needs the victim's feature extractor \(f\). One poison suffices when only the last layer is retrained; when all layers are retrained, about 50 poisons and a "watermark" of the target are needed (slides 12–14).</li>
-      <li><b>Witches' Brew</b> (gradient matching).<sup class="cite"><a href="#ref-witches">3</a></sup> When the victim trains from scratch, \(f\) keeps changing. Instead, make the training gradient of the poisons point the same way as the gradient that would label the target as the attacker wants:
-      $$\min_{\Delta}\ 1 - \cos\!\Big(\nabla_\theta \mathcal L\big(f_\theta(t), y_{\text{adv}}\big),\ \tfrac{1}{P}\textstyle\sum_{i} \nabla_\theta \mathcal L\big(f_\theta(x_i + \Delta_i), y_i\big)\Big), \qquad \lVert\Delta_i\rVert_\infty \le \epsilon .$$</li>
-    </ul>
-    <p>The training procedure can also be attacked without touching any data: reordering batches can stall learning (slide 18), and "sponge" poisoning makes every prediction cost more energy (slide 19).</p>
+  <p class="lead">Choosing the most harmful poison is a <b>bilevel</b> problem: one optimisation nested inside another (slide 7).</p>
+  <div class="nest">
+    <div class="nh2">Outer problem · the attacker picks the poison</div>
+    $$\max_{x_c}\ L\big(\mathcal D_{\text{val}};\ w^\star\big)$$
+    <div class="inner">
+      <div class="nh2">Inner problem · the defender trains on the poisoned data</div>
+      $$w^\star = \arg\min_{w}\ L\big(\mathcal D_{\text{tr}} \cup \{(x_c, y_c)\};\ w\big)$$
+    </div>
+    <div class="loopnote">Biggio et al.: move \(x_c\) uphill on the validation error, retrain the SVM, repeat (slides 7–9).<sup class="cite"><a href="#ref-biggio">1</a></sup></div>
+  </div>
+  <div class="vlabel">Three ways to solve it</div>
+  <div class="vgrid three">
+    <div class="vcard atk"><div class="vic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.2"/></svg></div><div class="vt">Biggio et al. (2012)</div><div class="vd"><p><b>Victim:</b> support vector machine.</p><p><b>Idea:</b> exact gradient of the validation error from the SVM's optimality conditions.</p></div><div class="vf"><span class="tagp m">1 poison point</span><span class="tagp m">slides 7–9</span></div></div>
+    <div class="vcard atk"><div class="vic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 16l5-5 4 4 3-3 6 6"/><circle cx="16" cy="9" r="1.5"/></svg></div><div class="vt">Poison Frogs (2018)</div><div class="vd"><p><b>Idea:</b> feature collision. The poison looks like a cat but has the target dog's features.</p><p><b>Needs:</b> the victim's feature extractor \(f\).</p></div><div class="vf"><span class="tagp m">1 poison if only the last layer trains</span><span class="tagp m">≈50 if all layers train</span><span class="tagp m">slides 10–14</span></div></div>
+    <div class="vcard atk"><div class="vic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 4c2 12 6 15 18 16"/><path d="M3 4c3 6 9 9 18 9" stroke-dasharray="3 3"/></svg></div><div class="vt">Witches' Brew (2021)</div><div class="vd"><p><b>Idea:</b> gradient matching. Poisons push the weights the same way as "label the target as cat".</p><p><b>Works</b> when the victim trains from scratch.</p></div><div class="vf"><span class="tagp m">few poisons</span><span class="tagp m">slides 15–16</span></div></div>
+  </div>
+  <p>Poison Frogs<sup class="cite"><a href="#ref-frogs">2</a></sup> keeps the poison near a base image \(b\) while matching the target \(t\) in feature space:</p>
+  $$\min_{x}\ \lVert f(x) - f(t)\rVert_2^2 + \beta\,\lVert x - b\rVert_2^2 .$$
+  <p>Witches' Brew<sup class="cite"><a href="#ref-witches">3</a></sup> aligns the poisons' training gradient with the attacker's desired gradient:</p>
+  $$\min_{\Delta}\ 1 - \cos\!\Big(\nabla_\theta \mathcal L\big(f_\theta(t), y_{\text{adv}}\big),\ \tfrac{1}{P}\textstyle\sum_{i} \nabla_\theta \mathcal L\big(f_\theta(x_i + \Delta_i), y_i\big)\Big), \qquad \lVert\Delta_i\rVert_\infty \le \epsilon .$$
+  <div class="vlabel">Attacks on the procedure, with no change to the data</div>
+  <div class="vgrid two">
+    <div class="vcard atk"><div class="vic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7h4l10 10h4M3 17h4l3-3M14 10l3-3h4"/><path d="M18 4l3 3-3 3M18 14l3 3-3 3"/></svg></div><div class="vt">Batch reordering (slide 18)</div><div class="vd">Same data, attacker-chosen order: one bad epoch can slow or reset learning.</div></div>
+    <div class="vcard atk"><div class="vic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2L4 14h7l-1 8 9-12h-7z"/></svg></div><div class="vt">Sponge poisoning (slide 19)</div><div class="vd">Training pushes activations away from zero, so every prediction costs more energy.</div></div>
   </div>
   <details class="deriv-p">
     <summary><b>Derivation</b> · Poison Frogs' backward step is a weighted average</summary>
@@ -604,43 +684,61 @@ details.cellout > img.nbimg { margin-top: .5rem; width: 100%; height: auto; }
 <section id="a3">
   <div class="eyebrow">Prologue · Lecture 19, slides 20–29</div>
   <h2>A3 · Backdoor attacks and the two numbers that measure them</h2>
-  <div class="prose">
-    <p>A backdoored model behaves normally on clean inputs, but switches to a hidden behaviour when it sees a <b>trigger</b> (slide 20). The attacker turns some clean pairs into poisoned pairs with a function \(g\) of their choice:</p>
-    $$(x', y') = g(x, y), \qquad \text{for example } x' = x \oplus \text{trigger},\ \ y' = y_t .$$
-    <p>Ordinary training on the mixture then learns both behaviours at once (slide 22):</p>
-    $$\mathcal L = \underbrace{\mathbb E_{(x,y)\sim\mathcal D_c}\big[\ell(f(x), y)\big]}_{\text{normal behaviour}} + \underbrace{\mathbb E_{(x',y')\sim\mathcal D_b}\big[\ell(f(x'), y')\big]}_{\text{hidden behaviour}} .$$
-    <p>The trigger can be a patch, a blended image, a photo filter, a warp, faint stripes, or in a language model a word or a topic (slides 23–24). It can enter through scraped data, including expired web domains that an attacker re-registers (slides 25–26),<sup class="cite"><a href="#ref-carlini24">4</a></sup> or through a downloaded pre-trained model (slide 27).</p>
-    <p>Two numbers measure a backdoor (slide 29): the <b>clean accuracy</b> (CA) and the <b>attack success rate</b> (ASR).<sup class="cite"><a href="#ref-badnets">5</a></sup></p>
-    $$\text{CA} = \frac{\#\{f(x) = y\}}{\#\text{clean test images}}, \qquad \text{ASR} = \frac{\#\{f(x') = y_t\}}{\#\text{triggered test images}} .$$
-    <p>A strong backdoor keeps CA high, so it is hard to detect, and makes ASR high, so it is reliably effective.</p>
+  <p class="lead">A backdoored model behaves normally on clean inputs, and switches to a hidden behaviour when it sees a <b>trigger</b> (slide 20).</p>
+  <div class="pipe"><div class="pb ok">Clean pair<small>\((x, y)\)</small></div><span class="pa">→</span><div class="pb atk">Attacker's function \(g\)<small>add trigger, set \(y_t\)</small></div><span class="pa">→</span><div class="pb atk">Poisoned pair<small>\((x \oplus \text{trigger},\ y_t)\)</small></div><span class="pa">→</span><div class="pb ">Mixed training set<small>\(\mathcal D_c \cup \mathcal D_b\)</small></div><span class="pa">→</span><div class="pb def">One model<small>two behaviours</small></div></div>
+  <p class="pipe-cap">Ordinary training on the mixture learns both behaviours at once (slide 22). Nothing special is needed.</p>
+  $$\mathcal L = \underbrace{\mathbb E_{(x,y)\sim\mathcal D_c}\big[\ell(f(x), y)\big]}_{\text{normal behaviour}} + \underbrace{\mathbb E_{(x',y')\sim\mathcal D_b}\big[\ell(f(x'), y')\big]}_{\text{hidden behaviour}} .$$
+  <div class="vlabel">A trigger can be almost anything (slides 23–24)</div>
+  <div class="chips"><span class="chip z">patch<small>a small square</small></span><span class="chip z">clean label<small>label stays correct</small></span><span class="chip z">photo filter<small>Nashville</small></span><span class="chip z">warp<small>WaNet</small></span><span class="chip z">blend<small>faint noise</small></span><span class="chip z">stripes<small>SIG</small></span><span class="chip z">LLM word or topic<small>BackdoorLLM</small></span></div>
+  <div class="vlabel">How it gets in (slides 21, 25–27)</div>
+  <div class="vgrid two">
+    <div class="vcard atk"><div class="vic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg></div><div class="vt">Scraped web data</div><div class="vd">Buy an expired domain and serve a poisoned image at the old link. $1000 controls at least 0.01% of every dataset checked.<sup class="cite"><a href="#ref-carlini24">4</a></sup></div></div>
+    <div class="vcard atk"><div class="vic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12M7 10l5 5 5-5M4 20h16"/></svg></div><div class="vt">Downloaded models</div><div class="vd">A backdoored pre-trained model survives fine-tuning on your own data. Model hubs host millions of models.</div></div>
+  </div>
+  <div class="vlabel">Two numbers measure a backdoor (slide 29)<sup class="cite"><a href="#ref-badnets">5</a></sup></div>
+  <div class="stat2">
+    <div class="vcard ok"><div class="vic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 16l5-5 4 4 3-3 6 6"/><circle cx="16" cy="9" r="1.5"/></svg></div><div class="vt">Clean accuracy (CA) · keep high</div><div class="vd">$$\text{{CA}} = \frac{{\#\{{f(x) = y\}}}}{{\#\text{{clean test images}}}}$$<p>High CA: nobody notices.</p></div></div>
+    <div class="vcard atk"><div class="vic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="2"/><rect x="5.5" y="13.5" width="4.5" height="4.5" fill="currentColor" stroke="none"/></svg></div><div class="vt">Attack success rate (ASR) · attacker wants high</div><div class="vd">$$\text{{ASR}} = \frac{{\#\{{f(x') = y_t\}}}}{{\#\text{{triggered test images}}}}$$<p>High ASR: the backdoor works.</p></div></div>
   </div>
 </section>
 
 <section id="a4">
   <div class="eyebrow">Prologue · Lecture 20, slides 4–14</div>
   <h2>A4 · Adversarial training and its costs</h2>
-  <div class="prose">
-    <p>Adversarial training solves the min–max problem from last week: the inner maximisation finds the worst allowed perturbation, and the outer minimisation trains on it with the correct label (slides 5–8).<sup class="cite"><a href="#ref-madry">6</a></sup></p>
-    $$\min_\theta\ \mathbb E_{(x,y)\sim\mathcal D}\Big[\max_{\lVert\delta\rVert_\infty \le \epsilon} \ell\big(f_\theta(x + \delta), y\big)\Big].$$
-    <p>Lecture 20 then lists what it costs (slide 13): lower clean accuracy, \(K + 1\) passes per batch, more data, and <b>robust overfitting</b> (robust test accuracy peaks early and then falls). Variants change the loss (TRADES and MART add a term that keeps the output stable inside the ball) or make training cheaper (Free AT and Fast AT reuse gradients or use one random-start FGSM step) (slide 14).</p>
-    <p>Two cautionary results matter for this week's questions:</p>
-    <ul>
-      <li><b>Defensive distillation</b> looked robust against FGSM but was broken by the Carlini–Wagner attack (slide 9).</li>
-      <li><b>Obfuscated gradients</b> (shattered, stochastic or vanishing) make gradient attacks fail without making the model safe. Adaptive attacks broke most such defences: BPDA (backward-pass differentiable approximation) skips a non-differentiable step on the backward pass, and EOT (expectation over transformation) averages gradients over the defence's randomness (slide 11).<sup class="cite"><a href="#ref-athalye">7</a></sup></li>
-    </ul>
-    <p>Both are cases where a defence was evaluated against a weaker attacker than a real one, which is exactly the subject of Q1.</p>
+  <p class="lead">Adversarial training trains on the worst allowed perturbation, keeping the correct label (slides 5–8).<sup class="cite"><a href="#ref-madry">6</a></sup></p>
+  <div class="pipe"><div class="pb ">Batch \((x, y)\)</div><span class="pa">→</span><div class="pb atk">Inner max<small>find \(\delta\) by FGSM or PGD (\(K\) steps)</small></div><span class="pa">→</span><div class="pb def">Outer min<small>update \(\theta\) on \(x + \delta\) with label \(y\)</small></div><span class="pa">→</span><div class="pb dim">Next batch<small>repeat</small></div></div>
+  $$\min_\theta\ \mathbb E_{(x,y)\sim\mathcal D}\Big[\max_{\lVert\delta\rVert_\infty \le \epsilon} \ell\big(f_\theta(x + \delta), y\big)\Big].$$
+  <div class="vlabel">What it costs (slide 13)</div>
+  <div class="vgrid">
+    <div class="vcard c2"><span class="vn">1</span><div class="vic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 5l6 6 4-4 8 8"/><path d="M21 9v6h-6"/></svg></div><div class="vt">Lower clean accuracy</div><div class="vd">Illustrative: \(95\% \to 87\%\).</div></div>
+    <div class="vcard c2"><span class="vn">2</span><div class="vic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div><div class="vt">Slower training</div><div class="vd">\(K\) attack steps plus 1 update per batch.</div></div>
+    <div class="vcard c2"><span class="vn">3</span><div class="vic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><ellipse cx="12" cy="5.5" rx="8" ry="3"/><path d="M4 5.5v13c0 1.7 3.6 3 8 3s8-1.3 8-3v-13M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/></svg></div><div class="vt">More data</div><div class="vd">Robust models need more training examples.</div></div>
+    <div class="vcard c2"><span class="vn">4</span><div class="vic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 4c2 12 6 15 18 16"/><path d="M3 4c3 6 9 9 18 9" stroke-dasharray="3 3"/></svg></div><div class="vt">Robust overfitting</div><div class="vd">Robust test accuracy peaks early, then falls.</div></div>
   </div>
+  <div class="vlabel">Variants (slide 14)</div>
+  <div class="scroll-x"><table class="cmp tight"><thead><tr><th>Change</th><th>Methods</th><th>Idea</th></tr></thead><tbody>
+    <tr><td>the loss</td><td>TRADES, MART</td><td>fit the clean label, and keep the output stable inside the ball</td></tr>
+    <tr><td>the cost</td><td>Free AT, Fast AT</td><td>reuse gradients, or use one random-start FGSM step</td></tr>
+  </tbody></table></div>
+  <div class="vlabel">Two cautionary results</div>
+  <div class="vgrid two">
+    <div class="vcard atk"><div class="vic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/></svg></div><div class="vt">Defensive distillation (slide 9)</div><div class="vd">Looked robust against FGSM. Broken by the Carlini–Wagner attack on the logits.</div><div class="vf"><span class="tagp y">weak attacker</span></div></div>
+    <div class="vcard atk"><div class="vic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3l18 18M10.6 6.1A9 9 0 0 1 12 6c5 0 9 6 9 6a15 15 0 0 1-3 3.5M6.3 7.8C4.2 9.4 3 12 3 12s4 6 9 6a8 8 0 0 0 3.2-.7"/></svg></div><div class="vt">Obfuscated gradients (slide 11)</div><div class="vd">Shattered, stochastic or vanishing gradients make attacks fail without making the model safe. Broken by BPDA (approximate the backward pass) and EOT (average over randomness).<sup class="cite"><a href="#ref-athalye">7</a></sup></div><div class="vf"><span class="tagp y">weak attacker</span></div></div>
+  </div>
+  <div class="quote">Both defences were evaluated against a weaker attacker than a real one: the subject of Q1.</div>
 </section>
 
 <section id="a5">
   <div class="eyebrow">Prologue · Lecture 20, slides 15–18</div>
   <h2>A5 · Certified robustness by interval bound propagation</h2>
-  <div class="prose">
-    <p>Adversarial training is <b>empirical</b>: it is only tested against the attacks we tried. A <b>certificate</b> is a proof that no input in the ball can change the answer (slide 15).</p>
-    <p>Interval bound propagation (IBP) pushes a box of possible inputs through the network.<sup class="cite"><a href="#ref-ibp">8</a></sup> For one neuron \(z = \sum_i w_i x_i\) with \(x_i \in [l_i, u_i]\), each term is smallest at one end of its interval:</p>
-    $$z_{\min} = \sum_{i} \min(w_i l_i,\ w_i u_i), \qquad z_{\max} = \sum_{i} \max(w_i l_i,\ w_i u_i).$$
-    <p>ReLU then clips each interval at 0 (slide 16). If the lowest possible "cat" score is still above the highest possible "dog" score, the prediction is certified.</p>
+  <div class="vs2">
+    <div class="vcard c2"><div class="vic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.2"/></svg></div><div class="vt">Empirical robustness</div><div class="vd">Adversarial training. Tested only against the attacks we tried; an untried attack may still succeed.</div><div class="vf"><span class="tagp m">no guarantee</span></div></div>
+    <div class="vcard def"><div class="vic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/></svg></div><div class="vt">Certified robustness</div><div class="vd">A proof that <b>no</b> input in the ball of radius \(r\) changes the answer (slide 15).</div><div class="vf"><span class="tagp b">guarantee</span></div></div>
   </div>
+  <p>Interval bound propagation (IBP) pushes a whole box of inputs through the network, one neuron at a time.<sup class="cite"><a href="#ref-ibp">8</a></sup></p>
+  <div class="pipe"><div class="pb ">Input box<small>each pixel \([x_i - \epsilon,\ x_i + \epsilon]\)</small></div><span class="pa">→</span><div class="pb def">Each neuron<small>smallest and largest weighted sum</small></div><span class="pa">→</span><div class="pb def">ReLU<small>clip the interval at 0</small></div><span class="pa">→</span><div class="pb def">Output scores<small>cat range, dog range</small></div><span class="pa">→</span><div class="pb ok">Certified?<small>\(\min \text{{cat}} &gt; \max \text{{dog}}\)</small></div></div>
+  <p>For one neuron \(z = \sum_i w_i x_i\) with \(x_i \in [l_i, u_i]\), each term is extreme at one end of its interval:</p>
+  $$z_{\min} = \sum_{i} \min(w_i l_i,\ w_i u_i), \qquad z_{\max} = \sum_{i} \max(w_i l_i,\ w_i u_i).$$
   <div class="fig">
     <div class="fig-title"><span class="tag">Interactive</span>The two-pixel network of slide 17</div>
     <svg class="dia" id="a5-svg" viewBox="0 0 640 260" aria-label="Interval bounds through a small network"></svg>
@@ -655,43 +753,42 @@ details.cellout > img.nbimg { margin-top: .5rem; width: 100%; height: auto; }
     $$h_1 = x_1 + x_2, \qquad h_2 = x_1 - x_2, \qquad \text{cat} = \operatorname{ReLU}(h_1) - \operatorname{ReLU}(h_2), \qquad \text{dog} = \operatorname{ReLU}(h_2).$$
     <p>"Not certified" does not mean "attackable". The worst real input, \(x_1 = 0.5 + \epsilon\) and \(x_2 = 0.5 - \epsilon\), gives cat \(= 1 - 2\epsilon\) and dog \(= 2\epsilon\), so the label only flips at \(\epsilon = 0.25\). The gap between \(1/6\) and \(0.25\) is the looseness of slide 18.</p>
   </div>
-  <div class="prose">
-    <p>IBP is fast but loose: it combines worst cases that cannot happen together, so with depth the intervals grow too wide to certify anything useful (slide 18). Randomised smoothing (Q2) is the other certified method in the lecture.</p>
+  <div class="vgrid two">
+    <div class="vcard ok"><div class="vt">IBP strength</div><div class="vd">Fast: one forward pass with intervals.</div></div>
+    <div class="vcard atk"><div class="vt">IBP weakness (slide 18)</div><div class="vd">Loose: it combines worst cases that cannot happen together, so deep networks get intervals too wide to certify. Randomised smoothing (Q2) is the alternative.</div></div>
   </div>
 </section>
 
 <section id="a6">
   <div class="eyebrow">Prologue · Lecture 20, slides 24–27</div>
   <h2>A6 · Input preprocessing, detection and guardrails</h2>
-  <div class="prose">
-    <p>Three more defences act around the model instead of changing it:</p>
-    <ul>
-      <li><b>Input preprocessing</b> transforms the input before classifying: JPEG compression, total-variation minimisation, or binary thresholding (slide 24). Small perturbations are often removed, but an adaptive attacker can optimise through the transformation.</li>
-      <li><b>Detection</b> flags inputs that look out of distribution, using confidence, feature-space distance, or a trained detector (slide 25). A stricter threshold catches more attacks but rejects more clean inputs, and adaptive attacks can fool the classifier and the detector together.</li>
-      <li><b>Guardrails and safety training</b> for language models: guards screen the prompt and the draft reply, while supervised fine-tuning (SFT) and reinforcement learning from human feedback (RLHF) change the model's weights (slides 26–27).</li>
-    </ul>
-    <p>None of these is a guarantee. That is the point of the slide-28 summary: "Passing a detector is not a robustness guarantee."</p>
+  <p class="lead">Three more defences act <b>around</b> the model instead of changing it.</p>
+  <div class="pipe"><div class="pb ">Input</div><span class="pa">→</span><div class="pb def">Preprocess<small>JPEG, TV, threshold</small></div><span class="pa">→</span><div class="pb ">Classifier</div><span class="pa">→</span><div class="pb def">Detector or guard<small>reject or review</small></div><span class="pa">→</span><div class="pb ">Output</div></div>
+  <div class="vgrid three">
+    <div class="vcard def"><div class="vic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 4h18l-7 8v6l-4 2v-8z"/></svg></div><div class="vt">Input preprocessing (slide 24)</div><div class="vd"><p><b>How:</b> JPEG compression, total-variation minimisation or binary thresholding removes fine detail.</p><p><b>Limit:</b> an adaptive attacker optimises through the transform.</p></div></div>
+    <div class="vcard def"><div class="vic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5L21 21"/></svg></div><div class="vt">Detection (slide 25)</div><div class="vd"><p><b>How:</b> flag out-of-distribution inputs by confidence, feature distance or a trained detector.</p><p><b>Limit:</b> false alarms; adaptive attacks fool both models.</p></div></div>
+    <div class="vcard def"><div class="vic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h16v11H9l-5 4z"/></svg></div><div class="vt">Guardrails and safety training (slides 26–27)</div><div class="vd"><p><b>How:</b> guards screen the prompt and the draft; supervised fine-tuning (SFT) and RLHF change the weights.</p><p><b>Limit:</b> unsafe replies remain; safe requests get refused.</p></div></div>
   </div>
+  <div class="quote">"Passing a detector is not a robustness guarantee."<small>Lecture 20, summary (slide 28)</small></div>
 </section>
 
 <section id="a7">
   <div class="eyebrow">Prologue · Lecture 21, slides 3–15</div>
   <h2>A7 · Backdoor defences: cleaning the data or the model</h2>
-  <div class="prose">
-    <p>A useful defence keeps CA high and drives ASR down (slide 3). There are two starting points (slides 4–5):</p>
-    <ul>
-      <li><b>Before training: clean the data.</b> Find \(\hat{\mathcal D}_b \approx \mathcal D_b\) and train on the rest.</li>
-      <li><b>After training: clean the model.</b> Given a backdoored \(f_{\theta_b}\) and no knowledge of the trigger, find weights that keep CA but lose the backdoor.</li>
-    </ul>
-    <p>The lecture's tools, which Q4 puts into practice:</p>
-    <ul>
-      <li><b>Anti-backdoor learning</b> (ABL): backdoors are learned faster than the normal task, so samples whose loss drops fastest in early epochs are flagged, then unlearned by gradient ascent (slides 6–7).<sup class="cite"><a href="#ref-abl">9</a></sup></li>
-      <li><b>Cognitive distillation</b>: find the smallest mask of the image that still gives the same output. A backdoored image needs only its trigger (slides 8–9).<sup class="cite"><a href="#ref-cd">10</a></sup></li>
-      <li><b>Outlier detection</b>: poisons are few and alike, so they sit apart in feature space. Simplified LOF (SLOF) compares a point's neighbourhood radius with its neighbours' radii (slides 10–11).<sup class="cite"><a href="#ref-slof">11</a></sup></li>
-      <li><b>Trigger synthesis</b>: for each class, search for the smallest trigger that sends every input to that class. The backdoor target needs a much smaller one (Neural Cleanse, slide 12;<sup class="cite"><a href="#ref-nc">12</a></sup> DECREE for encoders, slide 13).</li>
-      <li><b>Partition and vote</b>: train one model per disjoint data split and take the majority vote, so one poisoned record can corrupt at most one vote (slide 14).<sup class="cite"><a href="#ref-dpa">13</a></sup></li>
-    </ul>
+  <p class="lead">A useful defence keeps CA high and drives ASR down (slide 3). There are two starting points (slides 4–5).</p>
+  <div class="vs2">
+    <div class="vcard def"><div class="vic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><ellipse cx="12" cy="5.5" rx="8" ry="3"/><path d="M4 5.5v13c0 1.7 3.6 3 8 3s8-1.3 8-3v-13M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/></svg></div><div class="vt">Before training: clean the data</div><div class="vd"><p><b>Given</b> the poisoned set \(\mathcal D\), with \(|\mathcal D_b| \ll |\mathcal D|\).</p><p><b>Goal:</b> find \(\hat{{\mathcal D}}_b \approx \mathcal D_b\) and train on the rest.</p></div><div class="vf"><span class="tagp m">you train from scratch</span></div></div>
+    <div class="vcard def"><div class="vic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="6" width="12" height="12" rx="2"/><path d="M9 2v4M15 2v4M9 18v4M15 18v4M2 9h4M2 15h4M18 9h4M18 15h4"/></svg></div><div class="vt">After training: clean the model</div><div class="vd"><p><b>Given</b> a backdoored \(f_{{\theta_b}}\); the trigger is unknown.</p><p><b>Goal:</b> new weights that keep CA and lose the backdoor.</p></div><div class="vf"><span class="tagp m">you downloaded the model</span></div></div>
   </div>
+  <div class="vlabel">The lecture's tools</div>
+  <div class="scroll-x"><table class="cmp tight"><thead><tr><th>Tool</th><th>Stage</th><th>Signal it uses</th><th>Slides</th></tr></thead><tbody>
+    <tr><td><b>Anti-backdoor learning</b><sup class="cite"><a href="#ref-abl">9</a></sup></td><td>data</td><td>poisons reach low loss faster; flag them, then unlearn by gradient ascent</td><td>6–7</td></tr>
+    <tr><td><b>Cognitive distillation</b><sup class="cite"><a href="#ref-cd">10</a></sup></td><td>data</td><td>a backdoored image keeps its output with only a tiny mask (the trigger)</td><td>8–9</td></tr>
+    <tr><td><b>Outlier detection (SLOF)</b><sup class="cite"><a href="#ref-slof">11</a></sup></td><td>data</td><td>poisons are few and alike, so they sit apart in feature space</td><td>10–11</td></tr>
+    <tr><td><b>Trigger synthesis</b><sup class="cite"><a href="#ref-nc">12</a></sup></td><td>model</td><td>the target class needs a much smaller trigger (Neural Cleanse, DECREE)</td><td>12–13</td></tr>
+    <tr><td><b>Partition and vote</b><sup class="cite"><a href="#ref-dpa">13</a></sup></td><td>data</td><td>one poisoned record corrupts at most one model's vote</td><td>14</td></tr>
+  </tbody></table></div>
+  <p class="pipe-cap">Q4 tries cognitive distillation and outlier detection on a real backdoored model, and shows the loss signal behind anti-backdoor learning.</p>
   <div class="fig">
     <div class="fig-title"><span class="tag">Interactive</span>Partition and vote: how many poisons can the vote survive?</div>
     <div class="costbars" id="a7-bars"></div>
@@ -716,18 +813,17 @@ details.cellout > img.nbimg { margin-top: .5rem; width: 100%; height: auto; }
 <section id="a8">
   <div class="eyebrow">Prologue · Lecture 21, slides 16–24</div>
   <h2>A8 · Protective uses of attack techniques</h2>
-  <div class="prose">
-    <p>The same machinery can protect people (slides 16–24):</p>
-    <ul>
-      <li><b>Model watermarks</b>: the owner plants a secret backdoor with a few key images, then checks a suspect model on those keys (slide 16).</li>
-      <li><b>Text watermarks</b>: a language model prefers a secret "green list" of tokens; a detector with the key counts green tokens (slides 17–18).<sup class="cite"><a href="#ref-kirchenbauer">14</a></sup></li>
-      <li><b>BackdoorAlign</b>: a secret prefix acts as a "safety trigger" during fine-tuning (slide 19).</li>
-      <li><b>Unlearnable examples and Fawkes</b>: invisible perturbations on your photos make models trained on them useless, or make them learn the wrong face (slides 20–22).<sup class="cite"><a href="#ref-unlearnable">15</a></sup><sup class="cite"><a href="#ref-fawkes">16</a></sup></li>
-      <li><b>Adversarial T-shirts and robust CAPTCHAs</b>: hide from person detectors, or make text CAPTCHAs hard for solver models but easy for people (slides 23–24).<sup class="cite"><a href="#ref-captcha">17</a></sup> This is Q3.</li>
-    </ul>
-    <p>The text watermark is detected with a one-sided z-test. With \(T\) tokens, green share \(\gamma\) and \(|s|_G\) green tokens:</p>
-    $$z = \frac{|s|_G - \gamma T}{\sqrt{T\gamma(1-\gamma)}} .$$
+  <p class="lead">The same machinery can protect people (slides 16–24).</p>
+  <div class="vgrid three">
+    <div class="vcard ok"><div class="vic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="7.5" cy="12" r="4"/><path d="M11.5 12H21M18 12v3M21 12v2"/></svg></div><div class="vt">Model watermark (slide 16)</div><div class="vd"><div class="xform">backdoor <span class="arrow">→</span> proof of ownership</div>Plant secret key images; a stolen model still answers them.</div></div>
+    <div class="vcard ok"><div class="vic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 6V4h14v2M12 4v16M9 20h6"/></svg></div><div class="vt">Text watermark (slides 17–18)</div><div class="vd"><div class="xform">biased sampling <span class="arrow">→</span> AI-text detector</div>Prefer a secret green list of tokens; count them later.<sup class="cite"><a href="#ref-kirchenbauer">14</a></sup></div></div>
+    <div class="vcard ok"><div class="vic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg></div><div class="vt">BackdoorAlign (slide 19)</div><div class="vd"><div class="xform">secret trigger <span class="arrow">→</span> safety switch</div>A secret prefix keeps a fine-tuned model safe.</div></div>
+    <div class="vcard ok"><div class="vic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="2"/><circle cx="6" cy="8" r="1"/><circle cx="17" cy="7" r="1"/><circle cx="7" cy="17" r="1"/><circle cx="18" cy="16" r="1"/><circle cx="12" cy="4" r="1"/><circle cx="12" cy="20" r="1"/></svg></div><div class="vt">Unlearnable examples (slides 20–21)</div><div class="vd"><div class="xform">error-minimising noise <span class="arrow">→</span> useless training data</div>Scraped photos teach a model nothing.<sup class="cite"><a href="#ref-unlearnable">15</a></sup></div></div>
+    <div class="vcard ok"><div class="vic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 3l18 18M10.6 6.1A9 9 0 0 1 12 6c5 0 9 6 9 6a15 15 0 0 1-3 3.5M6.3 7.8C4.2 9.4 3 12 3 12s4 6 9 6a8 8 0 0 0 3.2-.7"/></svg></div><div class="vt">Fawkes (slide 22)</div><div class="vd"><div class="xform">feature-space attack <span class="arrow">→</span> privacy cloak</div>A face model learns the wrong face from cloaked photos.<sup class="cite"><a href="#ref-fawkes">16</a></sup></div></div>
+    <div class="vcard ok"><div class="vic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="6" width="18" height="12" rx="2"/><path d="M7 14l2-4 2 4M14 10h3l-3 4h3"/></svg></div><div class="vt">T-shirts and CAPTCHAs (slides 23–24)</div><div class="vd"><div class="xform">adversarial patch or noise <span class="arrow">→</span> hard for machines</div>Hide from detectors; robust CAPTCHAs are Q3.<sup class="cite"><a href="#ref-captcha">17</a></sup></div></div>
   </div>
+  <p>The text watermark is detected with a one-sided z-test. With \(T\) tokens, green share \(\gamma\) and \(|s|_G\) green tokens:</p>
+  $$z = \frac{|s|_G - \gamma T}{\sqrt{T\gamma(1-\gamma)}} .$$
   <div class="fig">
     <div class="fig-title"><span class="tag">Interactive</span>Detecting a text watermark (slide 18)</div>
     <div class="nchain" id="a8-tok"></div>
