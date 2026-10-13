@@ -10,19 +10,19 @@ Each question starts with the prerequisites it needs, explained inline with a fi
 
 ## What's inside
 
-- **Prologue (A1–A8).** The three lectures in order, with live figures:
-  - a logistic regression you can poison by label flipping or clean-label moves;
-  - interval bound propagation through slide 17's network;
-  - partition-and-vote poisoning bounds;
-  - a text-watermark z-test.
-- **Q1–Q3.** Threat models, randomised smoothing and adversarial CAPTCHAs (details in the table below).
-- **Q4, the notebook.** Every code cell verbatim, with Copy buttons and the notebook's saved plots. We re-ran it offline with the same seeds; clean accuracy is 98.5% and ASR 98.9% (the notebook reports 98.6% and 98.8%). The trained LeNet is exported, and its JavaScript forward pass matches PyTorch to 4 × 10⁻⁶. On the page you can:
-  - draw or pick a digit and move the trigger;
-  - see ASR by trigger position, size and intensity;
-  - explore the t-SNE of the features;
-  - compare SLOF with k-NN scores;
-  - view the cognitive-distillation masks and ROC curves.
-- **Wrap-up.** A summary of key results and 24 references, each checked on dblp or the publisher's page.
+The page follows the four tutorial questions in order. Each question brings in the lecture material it needs at the point it is needed; everything else is in "Additional material" at the end.
+
+| Question | What students do |
+|---|---|
+| Q1 · What can the attacker access? | a threat-model comparison table with the cost of one gradient at each access level; a query-cost exercise; one answer reveal |
+| Q2 · What does a certificate guarantee? | one input judged empirically and with a certificate; a guided smoothing experiment (noisy inputs → votes → confidence bound → radius, with base and smoothed boundaries drawn) with four tasks; the ℓ2 versus ℓ∞ comparison; a review-capacity decision with clean inputs, attacks just across the boundary and attacks pushed further |
+| Q3 · Can perturbations help people? | read a perturbed CAPTCHA yourself, then reveal what an attacked and an unseen solver read; the unseen solver's estimated CAPTCHA solve rate |
+| Q4 · How does a backdoor work? | the same digit with and without the trigger (live LeNet) with presets for the trained trigger, wrong location, smaller and dimmer triggers, next to the ASR measured across 1000 images; training results; side-by-side confusion matrices; two t-SNE views; outlier detection and cognitive distillation results, with extensions |
+| Additional material | the lecture recap (lectures 19–21) with optional figures, the notebook set-up cells, implementation notes, a summary table and references |
+
+Every figure is labelled **Live model** (the trained network running in the browser), **Precomputed** (measured offline with PyTorch) or **Illustrative toy model**. Notebook code is collapsed by default and shown verbatim when opened.
+
+Earlier layouts remain available: [`previous.html`](previous.html) (prologue first) and [`text.html`](text.html) (text prologue).
 
 ## Question-by-question sequence
 
