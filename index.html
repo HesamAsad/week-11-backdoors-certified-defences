@@ -619,6 +619,19 @@ nav.toc p.small a { display: inline; padding: 0; color: var(--model); }
 @media (max-width: 560px) { .cdpairs { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 .cdpairs figure { margin: 0; } .cdpairs .pr2 { display: grid; grid-template-columns: 1fr 1fr; gap: 3px; } .cdpairs canvas { width: 100%; aspect-ratio: 1; }
 .cdpairs figcaption { font-family: var(--font-display); font-size: .78rem; color: var(--muted); text-align: center; margin-top: .25rem; }
+.cn-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; margin-top: 1rem; }
+@media (max-width: 900px) { .cn-grid { grid-template-columns: minmax(0, 1fr); } }
+.cn { border: 1px solid var(--rule); border-radius: 10px; padding: 1rem 1.1rem; background: var(--surface); min-width: 0; break-inside: avoid; }
+.cn h3 { margin: 0 0 .5rem; font-size: 1.05rem; } .cn h3 a { color: var(--ink); text-decoration: none; }
+.cnq { display: inline-block; font-family: var(--font-mono); font-size: .8rem; color: var(--model); border: 1px solid currentColor; border-radius: 5px; padding: 0 .35rem; margin-right: .5rem; vertical-align: 2px; }
+.cnh { font-family: var(--font-display); font-size: .82rem; font-weight: 700; letter-spacing: .01em; color: var(--muted); margin: .8rem 0 .3rem; }
+.cn ul { margin: 0; padding-left: 1.1rem; font-size: .92rem; } .cn li { margin: .2rem 0; }
+.cn .katex-display { margin: .3rem 0; overflow-x: auto; overflow-y: hidden; font-size: .95em; }
+.cnt { width: 100%; border-collapse: collapse; font-size: .88rem; } .cnt td { border-top: 1px solid var(--rule); padding: .35rem .4rem; vertical-align: top; }
+.cnt td:nth-child(2) { white-space: nowrap; color: var(--model); } .cnt td:nth-child(3) { color: var(--muted); }
+.cnk { font-size: .88rem; margin: .6rem 0 0; padding-left: .6rem; border-left: 3px solid var(--model); }
+.cnlink { display: inline-block; margin-top: .5rem; font-family: var(--font-display); font-size: .85rem; }
+.cnf { font-size: .88rem; margin: .2rem 0 .4rem; color: var(--muted); }
 </style>
 </head>
 <body>
@@ -634,7 +647,7 @@ nav.toc p.small a { display: inline; padding: 0; color: var(--model); }
     <div class="qg" data-g="q4"><a class="qh" href="#q4"><span class="n">Q4</span>How does a backdoor work?</a>
       <div class="sub"><a href="#q4-probe"><span class="n">4.1</span>Live probe of the backdoor</a><a href="#q4-data"><span class="n">4.2</span>The poisoned dataset</a><a href="#q4-train"><span class="n">4.3</span>Training results</a><a href="#q4-feat"><span class="n">4.4</span>Feature space</a><a href="#q4-slof"><span class="n">4.5</span>Outlier detection</a><a href="#q4-cd"><span class="n">4.6</span>Cognitive distillation</a><a href="#q4-next"><span class="n">4.7</span>Take-home challenges</a></div></div>
     <div class="qg" data-g="extra"><a class="qh" href="#extra"><span class="n">+</span>Additional material</a>
-      <div class="sub"><a href="#a1"><span class="n">A1</span>Training-time attacks</a><a href="#a2"><span class="n">A2</span>Optimised poisons</a><a href="#a3"><span class="n">A3</span>Backdoor attacks</a><a href="#a4"><span class="n">A4</span>Adversarial training</a><a href="#a5"><span class="n">A5</span>Interval bound propagation</a><a href="#a6"><span class="n">A6</span>Preprocessing and detection</a><a href="#a7"><span class="n">A7</span>Backdoor defences</a><a href="#a8"><span class="n">A8</span>Protective uses</a><a href="#nb-setup"><span class="n">NB</span>Notebook set-up cells</a><a href="#notes"><span class="n">!</span>Changes to the notebook code</a><a href="#cheat"><span class="n">≡</span>Summary of key results</a><a href="#refs"><span class="n">¶</span>References</a></div></div>
+      <div class="sub"><a href="#a1"><span class="n">A1</span>Training-time attacks</a><a href="#a2"><span class="n">A2</span>Optimised poisons</a><a href="#a3"><span class="n">A3</span>Backdoor attacks</a><a href="#a4"><span class="n">A4</span>Adversarial training</a><a href="#a5"><span class="n">A5</span>Interval bound propagation</a><a href="#a6"><span class="n">A6</span>Preprocessing and detection</a><a href="#a7"><span class="n">A7</span>Backdoor defences</a><a href="#a8"><span class="n">A8</span>Protective uses</a><a href="#nb-setup"><span class="n">NB</span>Notebook set-up cells</a><a href="#notes"><span class="n">!</span>Changes to the notebook code</a><a href="#cheatnotes"><span class="n">✎</span>Cheat notes</a><a href="#cheat"><span class="n">≡</span>Summary of key results</a><a href="#refs"><span class="n">¶</span>References</a></div></div>
   </div>
   <div class="toolbar">
     <div class="theme-switch" role="group" aria-label="Colour theme">
@@ -726,6 +739,7 @@ nav.toc p.small a { display: inline; padding: 0; color: var(--model); }
       <li>A defence that only holds against black-box attackers is security through obscurity, and fails as soon as the model leaks.</li>
     </ul>
   </details>
+  <a class="cnlink" href="#cn-q1">Cheat notes for Q1 →</a>
 </section>
 
 <section id="q2">
@@ -845,6 +859,7 @@ nav.toc p.small a { display: inline; padding: 0; color: var(--model); }
       <li>The radius is a guaranteed lower bound, not a measured distance to the boundary. A small radius means we could not certify a large neighbourhood: this can reflect boundary proximity, limited samples, or a conservative bound. Inputs near the boundary may be adversarial, so send small-radius inputs, and every abstention, to additional review.</li>
     </ul>
   </details>
+  <a class="cnlink" href="#cn-q2">Cheat notes for Q2 →</a>
 </section>
 
 <section id="q3">
@@ -916,6 +931,7 @@ nav.toc p.small a { display: inline; padding: 0; color: var(--model); }
       <li><b>Similar systems:</b> Fawkes photo cloaking, unlearnable examples, adversarial clothing against person detectors, anti-scraping text (lecture 21, slides 20–24).</li>
     </ul>
   </details>
+  <a class="cnlink" href="#cn-q3">Cheat notes for Q3 →</a>
 </section>
 
 <section id="q4">
@@ -1730,6 +1746,7 @@ ROC AUC: 91.49%</pre></details>
     <div class="vcard def"><div class="vt">Better detection</div><div class="vd">Track per-sample loss over the first epochs, or compare poisons with real zeros using a class-conditional score.</div></div>
     <div class="vcard def"><div class="vt">Remove the backdoor</div><div class="vd">Recover the trigger with Neural Cleanse (lecture 21, slide 12), then fine-tune, prune or unlearn, and re-measure CA and ASR.</div></div>
   </div>
+  <a class="cnlink" href="#cn-q4">Cheat notes for Q4 →</a>
 </section>
 
 <hr class="part">
@@ -2080,6 +2097,96 @@ show_image_grid(list(imgs), nrow=10)</code></pre></div></details><details class=
       <li><b>Cell 30</b> raises a <code>ValueError</code> for inputs outside [0, 1].</li>
       <li><b>Cells 32–33</b> score all 1200 poisoned images and 3000 random clean ones, and print the mean mask size of each group.</li>
     </ol>
+  </div>
+</section>
+
+<section id="cheatnotes">
+  <div class="eyebrow">Additional material</div>
+  <h2>Cheat notes for the four questions</h2>
+  <p class="lead">One card per tutorial question: what to remember, the formulas, the exercise answers with working, and the numbers worth quoting from the experiments.</p>
+  <div class="cn-grid">
+    <article class="cn" id="cn-q1">
+      <h3><a href="#q1"><span class="cnq">Q1</span>What can the attacker access?</a></h3>
+      <div class="cnh">Remember</div>
+      <ul>
+        <li>A threat model fixes the attacker's <b>goal</b>, <b>capability</b> (\(\lVert\delta\rVert_p \le \epsilon\)) and <b>knowledge</b>.</li>
+        <li><b>White-box:</b> architecture, weights, gradients; attacks by back-propagation (FGSM, PGD).</li>
+        <li><b>Black-box:</b> queries only, either scores (finite differences, ZOO) or labels (boundary attack); with no queries at all, transfer from a surrogate.</li>
+        <li><b>Defender's view:</b> assume white-box. Black-box access raises the cost, it does not prevent attacks; models leak; obscurity fails (Kerckhoffs).</li>
+      </ul>
+      <div class="cnh">Formula</div>
+      $$\frac{\partial \ell}{\partial x_i} \approx \frac{\ell(x + h\mathbf e_i) - \ell(x - h\mathbf e_i)}{2h}$$
+      <p class="cnf">Two queries per coordinate: \(2d\) queries per gradient.</p>
+      <div class="cnh">Exercise answers</div>
+      <table class="cnt"><tbody>
+        <tr><td>Queries per gradient</td><td><b>1568</b></td><td>\(2 \times 28 \times 28\)</td></tr>
+        <tr><td>10-step PGD, black-box</td><td><b>15 680</b></td><td>\(10 \times 1568\)</td></tr>
+        <tr><td>10-step PGD, white-box</td><td><b>10</b> backward passes</td><td>one exact gradient per step</td></tr>
+      </tbody></table>
+      <p class="cnk">Black-box access raises the cost about a thousandfold; it does not stop the attack.</p>
+    </article>
+
+    <article class="cn" id="cn-q2">
+      <h3><a href="#q2"><span class="cnq">Q2</span>What does a certificate guarantee?</a></h3>
+      <div class="cnh">Remember</div>
+      <ul>
+        <li>The guarantee is for the <b>smoothed</b> model \(g\), not the base model \(f\), and holds with probability \(1 - \alpha\).</li>
+        <li><b>Limits:</b> \(\ell_2\) only (an \(\ell_\infty\) box reaches \(\epsilon\sqrt d\)); conservative; \(n\) noisy forward passes per input; abstains near the boundary.</li>
+        <li><b>Cannot detect attacks:</b> an attack pushed far into the wrong class gets a <b>large</b> radius for its wrong label.</li>
+        <li><b>Operational use:</b> send abstentions and inputs with \(R &lt; \tau\) to review. A small radius means we could not certify a large neighbourhood (boundary proximity, few samples, or a conservative bound), not that the input is an attack.</li>
+      </ul>
+      <div class="cnh">Formulas</div>
+      $$t = \sqrt{\frac{\ln(1/\alpha)}{2n}}, \qquad \underline{p_A} = \hat p_A - t$$
+      $$R = \sigma\,\Phi^{-1}(\underline{p_A}), \qquad \text{abstain if } \underline{p_A} \le \tfrac12$$
+      <div class="cnh">Exercise answers</div>
+      <p class="cnf">\(n = 100\,000\) noisy copies, 90 000 votes for cat, \(\alpha = 0.001\), \(\sigma = 0.25\).</p>
+      <table class="cnt"><tbody>
+        <tr><td>Safety margin \(t\)</td><td><b>0.0059</b></td><td>\(\sqrt{6.91 / 200\,000}\)</td></tr>
+        <tr><td>Certified radius \(R\)</td><td><b>0.312</b></td><td>\(0.25\,\Phi^{-1}(0.894)\), \(\Phi^{-1}(0.894) \approx 1.248\)</td></tr>
+        <tr><td>\(\ell_2\) radius covering an \(\epsilon = 0.1\) MNIST box</td><td><b>2.8</b></td><td>\(0.1\sqrt{784}\); about 9 × what we can prove</td></tr>
+      </tbody></table>
+      <p class="cnk">Smoothing experiment: with \(n = 100\) the margin is \(t \approx 0.19\), so the same input gets a much smaller radius or none.</p>
+    </article>
+
+    <article class="cn" id="cn-q3">
+      <h3><a href="#q3"><span class="cnq">Q3</span>Can perturbations help people?</a></h3>
+      <div class="cnh">Remember</div>
+      <ul>
+        <li><b>Perception gap:</b> a small \(\ell_\infty\) perturbation barely changes what people see but can change what a model predicts.</li>
+        <li><b>Transfer:</b> examples crafted on one solver often fool others, so the CAPTCHA does not need every solver.</li>
+        <li><b>Requirements:</b> access to (or good surrogates of) CAPTCHA-solving models, a budget small enough that people still read the text, and checks that the noise transfers.</li>
+        <li><b>Arms race:</b> solvers can adversarially train; no guarantee is permanent, but the pressure no longer falls on people.</li>
+        <li><b>Similar systems:</b> Fawkes photo cloaking, unlearnable examples, adversarial clothing against person detectors, anti-scraping text.</li>
+      </ul>
+      <div class="cnh">Formula</div>
+      $$P_{\text{solve}} \approx p^{k} \quad (k \text{ characters, independent errors})$$
+      <div class="cnh">Exercise answers</div>
+      <table class="cnt"><tbody>
+        <tr><td>\(p = 0.98\), 4 characters</td><td><b>0.922</b></td><td>\(0.98^4\)</td></tr>
+        <tr><td>\(p = 0.6\), 4 characters</td><td><b>0.13</b></td><td>\(0.6^4\)</td></tr>
+      </tbody></table>
+      <p class="cnk">Experiment at \(\epsilon = 0.2\): the unseen MLP solver drops from 95% to 60% per digit, about 13% per 4-digit CAPTCHA; the attacked LeNet drops to 40%.</p>
+    </article>
+
+    <article class="cn" id="cn-q4">
+      <h3><a href="#q4"><span class="cnq">Q4</span>How does a backdoor work?</a></h3>
+      <div class="cnh">Remember</div>
+      <ul>
+        <li><b>Attack:</b> 2% of MNIST (1200 images) get a 3 × 3 white square at the bottom left and the label 0.</li>
+        <li><b>Stealthy and effective:</b> CA 98.5%, ASR 98.9% after 5 epochs; the backdoor forms in epoch 2 (epoch 1 ASR 0.8%).</li>
+        <li><b>Precise trigger:</b> ASR 99.7% as trained, 0.1% in the wrong corner, 6.6% at 2 × 2, 27.5% at brightness 128.</li>
+        <li><b>Detection:</b> poisons form their own clusters in feature space. k-NN score AUC 0.83; the lecture's SLOF ratio only 0.62 (a dense cluster of poisons looks locally normal); cognitive distillation AUC 0.91.</li>
+        <li><b>Cognitive distillation:</b> the lecture expects small masks on poisoned images; with \(\gamma = 0.05\) the clean masks shrink further, so here large masks flag the poisons (18.1 vs 3.6).</li>
+      </ul>
+      <div class="cnh">Formulas</div>
+      $$\text{CA} = \frac{\#\{f(x) = y\}}{\#\text{clean}}$$
+      $$\text{ASR} = \frac{\#\{f(x') = y_t,\ y \ne y_t\}}{\#\{y \ne y_t\}}$$
+      <div class="cnh">Exercise answer</div>
+      <table class="cnt"><tbody>
+        <tr><td>"ASR" of a backdoor-free model if true zeros are counted</td><td><b>0.098</b></td><td>\(980 / 10\,000\)</td></tr>
+      </tbody></table>
+      <p class="cnk">That is why the triggered test set excludes the target class: counting the zeros would report 10.5% after epoch 1 instead of 0.8%.</p>
+    </article>
   </div>
 </section>
 

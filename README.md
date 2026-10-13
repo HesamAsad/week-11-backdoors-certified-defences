@@ -18,7 +18,7 @@ The page follows the four tutorial questions in order. Each question brings in t
 | Q2 · What does a certificate guarantee? | one input judged empirically and with a certificate; a guided smoothing experiment (noisy inputs → votes → confidence bound → radius, with base and smoothed boundaries drawn) with four tasks; the ℓ2 versus ℓ∞ comparison; a review-capacity decision with clean inputs, attacks just across the boundary and attacks pushed further |
 | Q3 · Can perturbations help people? | read a perturbed CAPTCHA yourself, then reveal what an attacked and an unseen solver read; the unseen solver's estimated CAPTCHA solve rate |
 | Q4 · How does a backdoor work? | the same digit with and without the trigger (live LeNet) with presets for the trained trigger, wrong location, smaller and dimmer triggers, next to the ASR measured across 1000 images; training results; side-by-side confusion matrices; two t-SNE views; outlier detection and cognitive distillation results, with extensions |
-| Additional material | the lecture recap (lectures 19–21) with optional figures, the notebook set-up cells, implementation notes, a summary table and references |
+| Additional material | the lecture recap (lectures 19–21) with optional figures, the notebook set-up cells, changes to the notebook code, cheat notes for the four questions (exercise answers included), a summary table and references |
 
 Every figure is labelled **Live model** (the trained network running in the browser), **Precomputed** (measured offline with PyTorch) or **Illustrative toy model**. Notebook code is collapsed by default and shown verbatim when opened.
 
