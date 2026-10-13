@@ -42,23 +42,17 @@ Earlier layouts remain available: [`previous.html`](previous.html) (prologue fir
 | Q3 | CAPTCHA solve rates \(0.98^4 \approx 0.922\) and \(0.6^4 \approx 0.13\) | lecture 21, slide 24 |
 | Q4 | 1200 poisoned images; the spurious ASR of a clean model (0.098); corrected ASR (0.9863) | notebook cells 16 and 22 |
 
-## Notes for the tutorial
+## Changes to the notebook code
 
-- **The ASR counts true zeros as successes.** Cell 21 relabels every triggered test image as 0, including the 980 real zeros, so the epoch-1 "ASR" of 10.39% is mostly those zeros (corrected: under 1%).
-- **Cell 12 previews a different trigger** (5 × 5, bottom right) from the one used (3 × 3, bottom left). The learned backdoor is position-specific: 99.7% at the trained position, 79% on average within 2 pixels of it, 0.5% further away.
-- **`slof` is a k-NN mean distance, not the lecture's SLOF ratio.** Its docstring lists arguments that don't exist, and cell 28 scores within unshuffled batches of 256. Re-run AUCs:
-  - 0.838 per batch;
-  - 0.831 over all samples;
-  - 0.617 for the true SLOF ratio.
-- **Cognitive distillation's score direction is reversed relative to lecture 21.** With `gamma=0.05`, most clean masks collapse while poisoned masks keep the trigger (mean L1 norm 18.1 vs 3.6). Flagging large masks gives AUC 0.915; the lecture's small-mask rule gives 0.085.
-- **The backdoor is learned in epoch 2.** In epoch 1, poisoned samples keep a high loss. Their loss falls below the clean loss only from epoch 2 on, which matters for anti-backdoor learning.
-- **Cell 30's error check is broken.** `raise('images should be normalized')` raises a `TypeError` instead.
-- **Subclassing MNIST re-downloads the dataset** into `./data/InMemoryPoisonedMNIST/raw`.
-- **Small issues:**
-  - `batch_size = 128` is unused;
-  - t-SNE's `n_iter` is now `max_iter`;
-  - the t-SNE compares different clean and poisoned images rather than matched pairs;
-  - cell 31 has no saved output or execution count (probably cleared);
-  - cell 34 ends with leftover chat-assistant text.
+The page shows the workshop notebook with small fixes, and every number on it comes from a CPU run of that code:
+
+- cell 12 previews the trigger actually used (3 × 3, bottom left);
+- cell 15 reuses `./data/MNIST/raw` instead of downloading a second copy;
+- cell 21 removes the true zeros from the triggered test set, so the ASR counts only digits the trigger changes;
+- cell 22 prints CA and ASR (98.5% and 98.9% after 5 epochs);
+- cell 25 uses `max_iter` for t-SNE;
+- cells 27–29 compute the k-NN distance score over all 60 000 training images (AUC 0.83);
+- cell 30 raises a `ValueError`;
+- cells 32–33 score 1200 poisoned and 3000 clean images with cognitive distillation (AUC 0.91, large masks flag poisons).
 
 Keys: `]` / `[` next and previous section, `P` present mode, `L` light/dark.
