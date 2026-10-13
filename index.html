@@ -613,6 +613,12 @@ details.cellwrap > .cell { margin-top: 0; border-top-left-radius: 0; border-top-
 main > section { scroll-margin-top: .5rem; }
 nav.toc p.small a { display: inline; padding: 0; color: var(--model); }
 #q4p-strip, #n45-strip { --n: 10 !important; } #q4p-strip figure div, #n45-strip figure div { font-size: .6rem; }
+.cap-hidden { grid-column: 1 / -1; aspect-ratio: 4 / 1; display: flex; align-items: center; justify-content: center; border: 1px dashed var(--rule); border-radius: 6px; color: var(--muted); font-family: var(--font-display); font-size: .85rem; }
+#q3-msg { color: var(--noise); }
+.cdpairs { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: .8rem; }
+@media (max-width: 560px) { .cdpairs { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.cdpairs figure { margin: 0; } .cdpairs .pr2 { display: grid; grid-template-columns: 1fr 1fr; gap: 3px; } .cdpairs canvas { width: 100%; aspect-ratio: 1; }
+.cdpairs figcaption { font-family: var(--font-display); font-size: .78rem; color: var(--muted); text-align: center; margin-top: .25rem; }
 </style>
 </head>
 <body>
@@ -678,16 +684,16 @@ nav.toc p.small a { display: inline; padding: 0; color: var(--model); }
   <div class="prose"><p>A threat model fixes the attacker's <b>goal</b> (here: a wrong prediction at test time), <b>capability</b> (here: \(\lVert\delta\rVert_\infty \le \epsilon\)) and <b>knowledge</b>. Only the knowledge changes between the rows below.</p></div>
   <div class="scroll-x">
   <table class="cmp">
-    <thead><tr><th>Access</th><th>Attacker sees</th><th>How it finds a direction</th><th>Cost of one gradient (MNIST)</th></tr></thead>
+    <thead><tr><th>Access</th><th>Attacker sees</th><th>How it finds a direction</th><th>Typical computation and target-query cost (MNIST)</th></tr></thead>
     <tbody>
-      <tr><td><b>White-box</b></td><td>architecture, weights, gradients, inputs, outputs</td><td>back-propagation (FGSM, PGD)</td><td>1 backward pass</td></tr>
-      <tr><td><b>Black-box: scores</b></td><td>inputs and output probabilities</td><td>finite differences on the scores (ZOO)<sup class="cite"><a href="#ref-zoo">1</a></sup></td><td>\(2d = 1568\) queries (fewer with random directions)</td></tr>
+      <tr><td><b>White-box</b></td><td>architecture, weights, gradients, inputs, outputs</td><td>back-propagation (FGSM, PGD)</td><td>1 backward pass per gradient; no queries needed beyond the model itself</td></tr>
+      <tr><td><b>Black-box: scores</b></td><td>inputs and output probabilities</td><td>finite differences on the scores (ZOO)<sup class="cite"><a href="#ref-zoo">1</a></sup></td><td>\(2d = 1568\) queries per gradient (fewer with random directions)</td></tr>
       <tr><td><b>Black-box: decisions</b></td><td>inputs and the top label only</td><td>walk along the decision boundary<sup class="cite"><a href="#ref-boundary">2</a></sup></td><td>many thousands of queries per image</td></tr>
-      <tr><td><b>No access</b></td><td>nothing about this model</td><td>attack a surrogate and transfer<sup class="cite"><a href="#ref-papernot">3</a></sup></td><td>0 queries, but success is not guaranteed</td></tr>
+      <tr><td><b>No access</b></td><td>nothing about this model</td><td>attack a surrogate and transfer<sup class="cite"><a href="#ref-papernot">3</a></sup></td><td>0 target queries; cost moves to training a surrogate, and success is not guaranteed</td></tr>
     </tbody>
   </table>
   </div>
-  <p class="takeaway">Moving down the table makes an attack <b>more expensive</b>, not impossible.</p>
+  <p class="takeaway">Restricting access changes the attacker's strategy and cost; query and transfer attacks remain possible.</p>
   <div class="vlabel">Why defenders plan for white-box access</div>
   <div class="vgrid g3">
     <div class="vcard atk"><div class="vt">Models leak</div><div class="vd">Weights get stolen, open-source base models are reused, and query access allows model extraction.</div></div>
@@ -773,7 +779,7 @@ nav.toc p.small a { display: inline; padding: 0; color: var(--model); }
     <div class="fig-title"><span class="tag toy">Illustrative toy model</span>Noisy inputs → votes → confidence bound → certified radius</div>
     <div class="smooth2">
       <div><canvas class="plot drag" id="q2s-cv" height="380" aria-label="Input with noisy copies, base and smoothed boundaries, and the certified ball"></canvas>
-        <div class="chart-legend"><span style="color:var(--muted)"><i class="dash"></i>base model \(f\)</span><span style="color:var(--model)"><i></i>smoothed model \(g\)</span><span style="color:var(--model)"><i class="box"></i>certified ball</span><span style="color:var(--noise)"><i class="dash"></i>\(\ell_\infty\) box</span></div></div>
+        <div class="chart-legend"><span style="color:var(--muted)"><i class="dash"></i>base model \(f\)</span><span style="color:var(--model)"><i></i>estimated smoothed boundary (\(g\))</span><span style="color:var(--model)"><i class="box"></i>certified ball</span><span style="color:var(--noise)"><i class="dash"></i>\(\ell_\infty\) box</span></div></div>
       <div class="pipeline-read" id="q2s-pipe"></div>
     </div>
     <div class="controls">
@@ -821,7 +827,7 @@ nav.toc p.small a { display: inline; padding: 0; color: var(--model); }
     </div>
     <div class="bigread" id="q2t-read"></div>
   </div>
-  <p class="takeaway">Attacks pushed further into the wrong class get <b>large</b> radii: the certificate protects their wrong label. A small radius means "close to the smoothed boundary, or too few samples"; it is a reason to look again, not proof of an attack.</p>
+  <p class="takeaway">Attacks pushed further into the wrong class get <b>large</b> radii: the certificate protects their wrong label. A small radius means we could not certify a large neighbourhood. This can reflect boundary proximity, limited samples, or a conservative bound; it is a reason to look again, not proof of an attack.</p>
 </section>
 
 <section id="q2-ans">
@@ -836,7 +842,7 @@ nav.toc p.small a { display: inline; padding: 0; color: var(--model); }
     <p><b>Operational use.</b></p>
     <ul>
       <li>A certificate cannot tell whether an input is under attack: the certified radius may belong to an adversarial example.</li>
-      <li>But the radius indicates how close an input is to the decision boundary, and inputs close to the boundary may be adversarial. Send those, and abstentions, to additional review.</li>
+      <li>The radius is a guaranteed lower bound, not a measured distance to the boundary. A small radius means we could not certify a large neighbourhood: this can reflect boundary proximity, limited samples, or a conservative bound. Inputs near the boundary may be adversarial, so send small-radius inputs, and every abstention, to additional review.</li>
     </ul>
   </details>
 </section>
@@ -873,7 +879,7 @@ nav.toc p.small a { display: inline; padding: 0; color: var(--model); }
   <div class="eyebrow">Q3 · Experiment</div>
   <h3>Read a CAPTCHA yourself</h3>
   <div class="investigate">Can you still read the digits after the noise that fools the solvers?</div>
-  <ol class="steps-mini"><li>Pick a CAPTCHA and a noise budget.</li><li>Type the four digits you read in the <b>perturbed</b> version.</li><li>Reveal what the two solver models read.</li></ol>
+  <ol class="steps-mini"><li>Pick a CAPTCHA and a noise budget.</li><li>Type the four digits you read in the <b>perturbed</b> version.</li><li>Check your reading: the clean digits and what the two solver models read appear afterwards.</li></ol>
   <div class="fig">
     <div class="fig-title"><span class="tag pre">Precomputed</span>Clean and perturbed CAPTCHA, side by side</div>
     <div class="controls">
@@ -881,12 +887,12 @@ nav.toc p.small a { display: inline; padding: 0; color: var(--model); }
       <div class="seg" id="q3-eps" role="group" aria-label="Noise budget"><button type="button" data-e="2">\(\epsilon = 0.1\)</button><button type="button" data-e="3">\(\epsilon = 0.15\)</button><button type="button" data-e="4" aria-pressed="true">\(\epsilon = 0.2\)</button><button type="button" data-e="5">\(\epsilon = 0.25\)</button></div>
     </div>
     <div class="capt2">
-      <figure><div class="cap4" id="q3-clean"></div><figcaption>clean</figcaption></figure>
-      <figure><div class="cap4" id="q3-pert"></div><figcaption>perturbed</figcaption></figure>
+      <figure><div class="cap4" id="q3-pert"></div><figcaption>perturbed: read this one</figcaption></figure>
+      <figure id="q3-cleanfig"><div class="cap4" id="q3-clean"></div><figcaption>clean</figcaption></figure>
     </div>
     <div class="controls">
       <label>I read: <input type="text" id="q3-guess" maxlength="4" inputmode="numeric" style="width:6rem;font-family:var(--font-mono);font-size:1.05rem;padding:.3rem .5rem;border:1px solid var(--rule);border-radius:6px;background:var(--surface);color:var(--ink)"></label>
-      <button type="button" id="q3-reveal" class="primary">Check and reveal the solvers</button>
+      <button type="button" id="q3-reveal" class="primary">Check my reading</button><button type="button" id="q3-skip">Reveal without answering</button><span id="q3-msg" class="small" role="status"></span>
     </div>
     <div class="bigread" id="q3-result"></div>
   </div>
@@ -1613,7 +1619,8 @@ print(f&quot;ROC AUC: {roc_auc*100:.2f}%&quot;)
   </div>
   <div class="fig">
     <div class="fig-title"><span class="tag pre">Precomputed</span>Masks and mask sizes (cell 31's settings)</div>
-    <div id="n48-grid"></div>
+    <div class="cdpairs" id="n48-pairs"></div>
+    <details class="extend"><summary>More examples · ten poisoned and ten clean images with their masks</summary><div id="n48-grid"></div></details>
     <div class="two" style="margin-top:.8rem">
       <div><canvas class="plot" id="n48-hist" height="240" aria-label="Mask L1 norm histograms"></canvas><div class="axlab">mask size \(\lVert m\rVert_1\)</div></div>
       <div class="stat1"><div class="vcard atk"><div class="vt">Poisoned images</div><div class="big">mean \(\lVert m\rVert_1\) = 18.1</div></div><div class="vcard ok"><div class="vt">Clean images</div><div class="big">mean \(\lVert m\rVert_1\) = 3.6</div></div></div>
@@ -1621,6 +1628,7 @@ print(f&quot;ROC AUC: {roc_auc*100:.2f}%&quot;)
     <div class="chart-legend"><span style="color:var(--noise)"><i class="box"></i>poisoned (all 1200)</span><span style="color:var(--data)"><i class="box"></i>clean (3000 sampled)</span></div>
   </div>
   <p class="takeaway">The masks of poisoned images sit on the trigger and stay large; with this sparsity weight (\(\gamma = 0.05\)) the masks of clean images shrink to almost nothing. Flagging large masks finds the poisons with AUC 0.91.</p>
+  <p class="small">The lecture's expected signal is smaller masks for poisoned images; this run shows the opposite ranking under the chosen settings, so we flag larger masks here.</p>
   <details class="extend">
     <summary>Extension · ROC curve of the mask score</summary>
     <div class="fig"><canvas class="plot" id="n48-roc" height="250" aria-label="ROC of mask norm"></canvas><div class="axlab">false positive rate against true positive rate, flagging large masks</div><div class="readout" id="n48-read"></div></div>
@@ -2560,7 +2568,9 @@ function drawDigit(cv, x, opts = {}) {
   const host = $('#n48-grid'), rows = [['cd_imgs_p', 'poisoned image'], ['cd_masks_p', 'its mask'], ['cd_imgs_c', 'clean image'], ['cd_masks_c', 'its mask']];
   host.innerHTML = rows.map(([k, l]) => `<div class="rowlab">${l}</div><div class="strip" style="--n:10">${Array.from({ length: 10 }, (_, i) => `<figure><canvas class="img px" data-k="${k}" data-i="${i}"></canvas></figure>`).join('')}</div>`).join('');
   const D = Object.fromEntries(rows.map(([k]) => [k, B64U(PL[k])]));
-  onRedraw(() => $$('canvas', host).forEach(c => { const a = D[c.dataset.k], i = +c.dataset.i; drawDigit(c, Float32Array.from(a.subarray(i * 784, i * 784 + 784), v => v / 255)); }))();
+  const pairs = $('#n48-pairs'), PAIRS = [['p', 0, 'poisoned'], ['p', 1, 'poisoned'], ['c', 0, 'clean'], ['c', 1, 'clean']];
+  pairs.innerHTML = PAIRS.map(([t, i, l]) => `<figure><div class="pr2"><canvas class="img px" data-k="cd_imgs_${t}" data-i="${i}"></canvas><canvas class="img px" data-k="cd_masks_${t}" data-i="${i}"></canvas></div><figcaption>${l} image · its mask</figcaption></figure>`).join('');
+  onRedraw(() => [...$$('canvas', host), ...$$('canvas', pairs)].forEach(c => { const a = D[c.dataset.k], i = +c.dataset.i; drawDigit(c, Float32Array.from(a.subarray(i * 784, i * 784 + 784), v => v / 255)); }))();
   onRedraw(() => {
     const H = PL.hist_cd, sp = H.p.reduce((a, b) => a + b, 0), sc = H.c.reduce((a, b) => a + b, 0), hp = H.p.map(v => v / sp), hc = H.c.map(v => v / sc), top = Math.max(...hp, ...hc);
     chart($('#n48-hist'), { xr: [0, H.hi], yr: [0, top], xticks: [0, Math.round(H.hi / 2), Math.round(H.hi)], yticks: [0], bars: [{ n: hp.length, vals: hc, color: alpha(css('--data'), .75), frac: .5 }, { n: hp.length, vals: hp, color: alpha(css('--noise'), .75), frac: .5, off: .5 }] });
@@ -2620,7 +2630,9 @@ $$('details').forEach(d => d.addEventListener('toggle', () => { if (d.open) setT
 // ---------- Q2.2: guided smoothing experiment ----------
 const SM2 = { sigma: 0.25, listeners: [] };
 (() => {
-  const cv = $('#q2s-cv'); let x = [-0.3, 0.1], n = 1000, showBox = false, P, gField = null, gKey = '', anim = null, seed = 3;
+  const cv = $('#q2s-cv'); let x = [-0.3, 0.1], n = 1000, showBox = false, P, gField = null, gKey = '', anim = null, timer = null, gen = 0, seed = 3;
+  // any task switch or manual control change cancels pending task actions
+  const invalidate = () => { gen++; cancelAnimationFrame(anim); clearTimeout(timer); if ($('#q2s-take').textContent === '…') $('#q2s-take').textContent = ''; };
   function smoothedField() {
     const key = SM2.sigma.toFixed(3); if (key === gKey) return gField; gKey = key;
     const nx = 120, ny = 80, M = 160, g = gaussFrom(rng(99)), Z = Array.from({ length: M }, () => [g(), g()]), Fv = new Float32Array(nx * ny);
@@ -2650,11 +2662,11 @@ const SM2 = { sigma: 0.25, listeners: [] };
     cross(ctx, X(x[0]), Y(x[1]), 10, css('--surface'), 6); cross(ctx, X(x[0]), Y(x[1]), 9, css('--ink'), 2.6);
     pipe(r);
   });
-  draggable(cv, () => true, (px, py) => { cancelAnimationFrame(anim); x = P.inv(px, py).map((v, i) => clamp(v, i ? -2 : -3, i ? 2 : 3)); draw(); });
+  draggable(cv, () => true, (px, py) => { invalidate(); x = P.inv(px, py).map((v, i) => clamp(v, i ? -2 : -3, i ? 2 : 3)); draw(); });
   const setN = v => { n = v; $$('#q2s-n button').forEach(b => b.setAttribute('aria-pressed', +b.dataset.n === n)); };
-  $$('#q2s-n button').forEach(b => b.addEventListener('click', () => { setN(+b.dataset.n); draw(); }));
-  $('#q2s-s').addEventListener('input', e => { SM2.sigma = +e.target.value / 100; $('#q2s-so').textContent = SM2.sigma.toFixed(2); draw(); SM2.listeners.forEach(f => f()); });
-  $('#q2s-box').addEventListener('change', e => { showBox = e.target.checked; draw(); });
+  $$('#q2s-n button').forEach(b => b.addEventListener('click', () => { invalidate(); setN(+b.dataset.n); draw(); }));
+  $('#q2s-s').addEventListener('input', e => { invalidate(); SM2.sigma = +e.target.value / 100; $('#q2s-so').textContent = SM2.sigma.toFixed(2); draw(); SM2.listeners.forEach(f => f()); });
+  $('#q2s-box').addEventListener('change', e => { invalidate(); showBox = e.target.checked; draw(); });
   const T = {
     1: { q: 'Task 1 · What happens to the votes and the radius as the input moves towards the boundary?', take: 'The vote share falls towards one half, so the radius shrinks; close to the smoothed boundary the method abstains.' },
     2: { q: 'Task 2 · The input stays where it is. Why does the certificate shrink with fewer noisy copies?', take: 'With n = 100 the safety margin t ≈ 0.19 is subtracted from the vote share, so the same input gets a much smaller radius, or none. The certificate pays for uncertainty about the vote.' },
@@ -2663,11 +2675,12 @@ const SM2 = { sigma: 0.25, listeners: [] };
   };
   function task(k) {
     $$('#q2s-tasks button').forEach(b => b.setAttribute('aria-pressed', b.dataset.t === String(k)));
-    $('#q2s-q').textContent = T[k].q; setTex($('#q2s-take'), ''); $('#q2s-take').textContent = '…'; cancelAnimationFrame(anim);
-    const done = () => { $('#q2s-take').textContent = T[k].take; };
+    invalidate(); const my = gen;
+    $('#q2s-q').textContent = T[k].q; setTex($('#q2s-take'), ''); $('#q2s-take').textContent = '…';
+    const done = () => { if (gen === my) $('#q2s-take').textContent = T[k].take; };
     showBox = false; $('#q2s-box').checked = false;
-    if (k === 1) { setN(1000); const a = [-0.3, 0.1], b = [1.22, 0.32], t0 = performance.now(), dur = reduceMotion ? 0 : 2600; const step = now => { const u = dur ? clamp((now - t0) / dur, 0, 1) : 1; x = [a[0] + (b[0] - a[0]) * u, a[1] + (b[1] - a[1]) * u]; draw(); if (u < 1) anim = requestAnimationFrame(step); else done(); }; anim = requestAnimationFrame(step); }
-    else if (k === 2) { x = [0.55, 0.15]; setN(100000); draw(); setTimeout(() => { setN(100); draw(); done(); }, reduceMotion ? 0 : 1300); }
+    if (k === 1) { setN(1000); const a = [-0.3, 0.1], b = [1.22, 0.32], t0 = performance.now(), dur = reduceMotion ? 0 : 2600; const step = now => { const u = dur ? clamp((now - t0) / dur, 0, 1) : 1; x = [a[0] + (b[0] - a[0]) * u, a[1] + (b[1] - a[1]) * u]; draw(); if (gen !== my) return; if (u < 1) anim = requestAnimationFrame(step); else done(); }; anim = requestAnimationFrame(step); }
+    else if (k === 2) { x = [0.55, 0.15]; setN(100000); draw(); timer = setTimeout(() => { if (gen !== my) return; setN(100); draw(); done(); }, reduceMotion ? 0 : 1300); }
     else if (k === 3) { x = [-0.3, 0.1]; setN(100000); showBox = true; $('#q2s-box').checked = true; draw(); done(); }
     else { x = [-1.9, 0.2]; setN(100000); draw(); done(); }
   }
@@ -2683,20 +2696,21 @@ const SM2 = { sigma: 0.25, listeners: [] };
     const r = rng(77), g = gaussFrom(r), clean = [];
     while (clean.length < 160) { const catPt = r() < 0.5, p = catPt ? [-0.2 + 0.9 * g(), 0.4 * g()] : [(r() < .5 ? -1 : 1) * (2.2 + 0.4 * Math.abs(g())), 1.4 * g()]; if (Math.abs(p[0]) > 3 || Math.abs(p[1]) > 2) continue; clean.push(p); }
     const push = (p, extra) => { let x = p.slice(); const s0 = Math.sign(S2(x)); for (let i = 0; i < 600 && Math.sign(S2(x)) === s0; i++) { const gr = grad(S2, x), n = Math.hypot(...gr) || 1; x = [x[0] - s0 * 0.01 * gr[0] / n, x[1] - s0 * 0.01 * gr[1] / n]; } for (let d = 0; d < extra; d += 0.01) { const gr = grad(S2, x), n = Math.hypot(...gr) || 1; x = [x[0] - s0 * 0.01 * gr[0] / n, x[1] - s0 * 0.01 * gr[1] / n]; } return x; };
-    const R = p => smooth(p, SM2.sigma, 400, 5).R;
+    const R = p => { const s = smooth(p, SM2.sigma, 400, 5); return { R: s.R, ab: s.abstain }; };
     data = { c: clean.map(R), a: clean.map(p => R(push(p, 0))), f: clean.map(p => R(push(p, 0.6))) };
   }
   const draw = onRedraw(() => {
-    compute(); const g = fitCanvas(cv), { ctx, w, h } = g, L = 150, Rm = 14, mx = Math.max(0.05, ...data.c, ...data.a, ...data.f) * 1.05, X = v => L + (w - L - Rm) * v / mx;
+    compute(); const g = fitCanvas(cv), { ctx, w, h } = g, L = 150, Rm = 14, mx = Math.max(0.05, ...[data.c, data.a, data.f].flat().map(d => d.R)) * 1.05, X = v => L + (w - L - Rm) * v / mx;
     const rows = [['clean inputs', data.c, css('--data')], ['attacks just across', data.a, css('--noise')], ['attacks pushed further', data.f, css('--noise')]];
     ctx.font = font(12, 600); ctx.textBaseline = 'middle';
     rows.forEach(([lab, vals, col], k) => {
       const y = 30 + k * (h - 60) / 2; ctx.fillStyle = css('--ink'); ctx.textAlign = 'right'; ctx.fillText(lab, L - 12, y);
-      const rr = rng(5 + k); vals.forEach(v => { const yy = y + (rr() - .5) * 26; dot(ctx, X(v), yy, 3.2, k === 2 ? null : alpha(col, .75), k === 2 ? col : null, 1.4); });
+      const rr = rng(5 + k); vals.forEach(d => { const v = d.R, yy = y + (rr() - .5) * 26; dot(ctx, X(v), yy, 3.2, k === 2 ? null : alpha(col, .75), k === 2 ? col : null, 1.4); });
     });
     ctx.fillStyle = css('--muted'); ctx.font = font(10.5); ctx.textAlign = 'center'; [0, mx / 2, mx].forEach(v => ctx.fillText(v.toFixed(2), X(v), h - 8));
     ctx.setLineDash([6, 4]); ctx.strokeStyle = css('--model'); ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(X(tau), 8); ctx.lineTo(X(tau), h - 22); ctx.stroke(); ctx.setLineDash([]);
-    const frac = (a) => a.filter(v => v < tau).length / a.length, cr = frac(data.c), ar = frac(data.a), fr = frac(data.f);
+    const frac = (a) => a.filter(d => d.ab || d.R < tau).length / a.length,  // review = abstained || R < tau
+      cr = frac(data.c), ar = frac(data.a), fr = frac(data.f);
     const workload = 0.9 * cr + 0.05 * ar + 0.05 * fr, missed = 1 - (ar + fr) / 2, ok = workload * 100 <= cap + 1e-9;
     const tile = (t, v, cls = '') => `<div class="br ${cls}"><div class="brt">${t}</div><div class="brv">${v}</div></div>`;
     $('#q2t-read').innerHTML = tile('Clean inputs reviewed', `${Math.round(100 * cr)}%`) + tile('Attacks missed', `${Math.round(100 * missed)}%`, missed > 0.4 ? 'bad' : '') + tile('Just across · pushed further', `${Math.round(100 * (1 - ar))}% · ${Math.round(100 * (1 - fr))}% missed`) + tile(`Review workload (capacity ${cap}%)`, `${(100 * workload).toFixed(1)}% ${ok ? '✓' : '✗ over capacity'}`, ok ? 'good' : 'bad');
@@ -2714,23 +2728,26 @@ const SM2 = { sigma: 0.25, listeners: [] };
   const imgs = e => Uint8Array.from(atob(C.ex[String(E[e])].img), ch => ch.charCodeAt(0));
   const four = (host, raw) => { host.innerHTML = [0, 1, 2, 3].map(j => `<canvas class="img px" data-i="${4 * k + j}"></canvas>`).join(''); $$('canvas', host).forEach(cv => { const i = +cv.dataset.i, rgba = new Uint8ClampedArray(784 * 4); for (let p = 0; p < 784; p++) { const v = raw[i * 784 + p]; rgba.set([v, v, v, 255], p * 4); } drawScaled(cv, offscreen(rgba, 28, 28), 28, 28, false); }); };
   const draw = onRedraw(() => {
-    four($('#q3-clean'), imgs(0)); four($('#q3-pert'), imgs(ei));
-    if (revealed) result();
+    four($('#q3-pert'), imgs(ei));
+    if (revealed) { four($('#q3-clean'), imgs(0)); result(); } else $('#q3-clean').innerHTML = '<div class="cap-hidden">shown after you answer</div>';
+    $('#q3-cleanfig').classList.toggle('hid', !revealed);
     const v = C.curve.map(c => [c.eps, c.victim ** 4]);
     const g = chart($('#q3-cv'), { xr: [0, 0.3], yr: [0, 1], xticks: E, yticks: [0, .5, 1], yfmt: q => Math.round(100 * q) + '%', series: [{ pts: v, color: css('--c2'), dots: true, w: 2.6 }], vline: E[ei] });
     const c = C.curve[ei]; dot(g.ctx, g.X(c.eps), g.Y(c.victim ** 4), 6, css('--c2'), css('--surface'));
     readout($('#q3-read2'), [`\\epsilon = ${E[ei]}`, `\\text{unseen solver: } ${Math.round(100 * c.victim)}\\%\\text{ per digit, about } ${Math.round(100 * c.victim ** 4)}\\%\\text{ per CAPTCHA}`, `\\text{attacked solver: } ${Math.round(100 * c.surrogate)}\\%\\text{ per digit}`]);
   });
   function result() {
-    const ex = C.ex[String(E[ei])], ids = [0, 1, 2, 3].map(j => 4 * k + j), truth = ids.map(i => C.labels[i]).join(''), sur = ids.map(i => ex.sur[i]).join(''), vic = ids.map(i => ex.vic[i]).join(''), guess = $('#q3-guess').value.trim();
+    const ex = C.ex[String(E[ei])], ids = [0, 1, 2, 3].map(j => 4 * k + j), truth = ids.map(i => C.labels[i]).join(''), sur = ids.map(i => ex.sur[i]).join(''), vic = ids.map(i => ex.vic[i]).join(''), guess = revealed === 'answer' ? $('#q3-guess').value.trim() : '';
     const tile = (t, v, ok) => `<div class="br ${ok ? 'good' : 'bad'}"><div class="brt">${t}</div><div class="brv mono">${v}</div></div>`;
-    $('#q3-result').innerHTML = tile('You read', guess || '—', guess === truth) + tile('True digits', truth, true) + tile('Attacked solver (LeNet) read', sur, sur === truth) + tile('Unseen solver (MLP) read', vic, vic === truth);
+    $('#q3-result').innerHTML = (guess ? tile('You read', guess, guess === truth) : '') + tile('True digits', truth, true) + tile('Attacked solver (LeNet) read', sur, sur === truth) + tile('Unseen solver (MLP) read', vic, vic === truth);
   }
-  const reset = () => { revealed = false; $('#q3-result').innerHTML = ''; $('#q3-guess').value = ''; };
+  const reset = () => { revealed = false; $('#q3-result').innerHTML = ''; $('#q3-guess').value = ''; $('#q3-msg').textContent = ''; };
+  const check = () => { const v = $('#q3-guess').value.trim(); if (!/^\d{4}$/.test(v)) { $('#q3-msg').textContent = 'Type the four digits you read first.'; return; } $('#q3-msg').textContent = ''; revealed = 'answer'; draw(); };
   $$('#q3-pick button').forEach(b => b.addEventListener('click', () => { k = +b.dataset.k; $$('#q3-pick button').forEach(x => x.setAttribute('aria-pressed', x === b)); reset(); draw(); }));
   $$('#q3-eps button').forEach(b => b.addEventListener('click', () => { ei = +b.dataset.e; $$('#q3-eps button').forEach(x => x.setAttribute('aria-pressed', x === b)); reset(); draw(); }));
-  $('#q3-reveal').addEventListener('click', () => { revealed = true; result(); });
-  $('#q3-guess').addEventListener('keydown', e => { if (e.key === 'Enter') { revealed = true; result(); } });
+  $('#q3-reveal').addEventListener('click', check);
+  $('#q3-skip').addEventListener('click', () => { $('#q3-msg').textContent = ''; revealed = 'skip'; draw(); });
+  $('#q3-guess').addEventListener('keydown', e => { if (e.key === 'Enter') check(); });
   draw();
 })();
 
@@ -2750,8 +2767,9 @@ const SM2 = { sigma: 0.25, listeners: [] };
     const x = digit(cur), [r0, c0] = trigCoords(size, loc, 1), xt = stamp(x, r0, c0, size, VALS[vi]);
     drawDigit($('#q4p-clean'), x); drawDigit($('#q4p-trig'), xt, { box: [r0, c0, size] });
     const pc = softmax(lenet(x)), pt = softmax(lenet(xt)), a = pc.indexOf(Math.max(...pc)), b = pt.indexOf(Math.max(...pt));
-    $('#q4p-pc').innerHTML = `<b>${a}</b><span>${Math.round(100 * pc[a])}% confident</span>`;
-    $('#q4p-pt').innerHTML = `<b class="${b === 0 && a !== 0 ? 'flip' : ''}">${b}</b><span>${Math.round(100 * pt[b])}% confident</span>`;
+    $('#q4p-pc').innerHTML = `<b>${a}</b><span>model score: ${pc[a] > 0.995 ? '≈100' : Math.round(100 * pc[a])}%</span>`;
+    $('#q4p-pt').innerHTML = `<b class="${b === 0 && a !== 0 ? 'flip' : ''}">${b}</b><span>model score: ${pt[b] > 0.995 ? '≈100' : Math.round(100 * pt[b])}%</span>`;
+    $$('#q4p-pre button').forEach(bt => { const q = presets[bt.dataset.p]; bt.setAttribute('aria-pressed', q[0] === size && q[1] === vi && q[2] === loc); });
     $('#q4p-so').textContent = `${size} × ${size}`; $('#q4p-vo').textContent = VALS[vi];
     $$('canvas', strip).forEach(c => { drawDigit(c, digit(+c.dataset.i)); c.style.outline = +c.dataset.i === cur ? `2px solid ${css('--model')}` : ''; });
     const m = measured(), tile = (t, v, s, cls = '') => `<div class="br ${cls}"><div class="brt">${t}</div><div class="brv">${v}</div><div class="brs">${s}</div></div>`;
