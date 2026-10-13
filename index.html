@@ -740,6 +740,19 @@ table.cmp td .tagp { font-size: .66rem; }
     <div class="vcard c2"><div class="vic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.2"/></svg></div><div class="vt">Empirical robustness</div><div class="vd">Adversarial training. Tested only against the attacks we tried; an untried attack may still succeed.</div><div class="vf"><span class="tagp m">no guarantee</span></div></div>
     <div class="vcard def"><div class="vic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/></svg></div><div class="vt">Certified robustness</div><div class="vd">A proof that <b>no</b> input in the ball of radius \(r\) changes the answer (slide 15).</div><div class="vf"><span class="tagp b">guarantee</span></div></div>
   </div>
+  <div class="fig">
+    <div class="fig-title"><span class="tag">Interactive</span>The same model, judged empirically and with a certificate (slide 15)</div>
+    <div class="two">
+      <div><canvas class="plot" id="a5c-emp" height="330" aria-label="Empirical robustness: attack attempts on each ball"></canvas><div class="axlab">empirical: test a few attacks per ball</div></div>
+      <div><canvas class="plot" id="a5c-cert" height="330" aria-label="Certified robustness: largest provably safe ball per point"></canvas><div class="axlab">certified: the largest ball proven safe</div></div>
+    </div>
+    <div class="chart-legend"><span style="color:var(--data)"><i class="box"></i>class A</span><span style="color:var(--c2)"><i class="box"></i>class B</span><span style="color:var(--muted)"><i class="dash"></i>budget ball, radius \(\epsilon\)</span><span style="color:var(--model)"><i></i>certified ball, radius \(r\)</span><span style="color:var(--noise)"><i class="box"></i>attack attempt that flips the label, or a region never checked</span></div>
+    <div class="controls">
+      <label>budget \(\epsilon\) <input type="range" id="a5c-e" min="5" max="60" value="40"><output id="a5c-eo"></output></label>
+    </div>
+    <div class="readout" id="a5c-read"></div>
+    <div class="cap">The boundary has a thin finger reaching towards one class-A point. On the left, eight attack attempts on each ball's edge miss the finger, so that point "passes" the empirical test, although part of its ball (orange) is on the wrong side. On the right, each point gets a certified radius \(r\): a proven lower bound on its distance to the boundary (drawn here as 85% of the true distance, capped at 0.6, because real certificates are conservative). The point next to the finger honestly gets a small ball. A point is certified when \(r \ge \epsilon\); the gap between \(r\) and the true distance is why certified methods give up earlier than attacks do.</div>
+  </div>
   <p>Interval bound propagation (IBP) pushes a whole box of inputs through the network, one neuron at a time.<sup class="cite"><a href="#ref-ibp">8</a></sup></p>
   <div class="pipe"><div class="pb ">Input box<small>each pixel \([x_i - \epsilon,\ x_i + \epsilon]\)</small></div><span class="pa">→</span><div class="pb def">Each neuron<small>smallest and largest weighted sum</small></div><span class="pa">→</span><div class="pb def">ReLU<small>clip the interval at 0</small></div><span class="pa">→</span><div class="pb def">Output scores<small>cat range, dog range</small></div><span class="pa">→</span><div class="pb ok">Certified?<small>\(\min \text{{cat}} &gt; \max \text{{dog}}\)</small></div></div>
   <p>For one neuron \(z = \sum_i w_i x_i\) with \(x_i \in [l_i, u_i]\), each term is extreme at one end of its interval:</p>
@@ -2633,6 +2646,50 @@ function smooth(x, sigma, n, seed = 1) {
   $('#a8-T').addEventListener('input', e => { const nT = +e.target.value; G = Math.round(G * nT / T); T = nT; draw(); });
   $('#a8-g').addEventListener('input', e => { G = +e.target.value; draw(); });
   draw();
+})();
+
+// ---------- A5: empirical versus certified robustness in feature space ----------
+(() => {
+  const ce = $('#a5c-emp'), cc = $('#a5c-cert'); let eps = 0.4;
+  // boundary: class A where F > 0 (left); a thin finger of class B reaches towards the point at (-0.85, 0.75)
+  const F = p => -(p[0] - 0.25 * Math.sin(1.6 * p[1])) - 1.4 * Math.exp(-(((p[1] - 0.75) / 0.075) ** 2)) * (1 / (1 + Math.exp(-(p[0] + 0.66) * 14)));
+  const pts = [[-1.5, 1.2, 0], [-0.85, 0.75, 0], [-1.6, 0.1, 0], [-1.1, -0.6, 0], [-1.7, -1.2, 0], [-0.7, -1.25, 0], [1.3, 1.2, 1], [1.0, 0.25, 1], [1.6, -0.3, 1], [0.95, -1.0, 1], [1.7, 0.8, 1], [0.6, -1.55, 1]];
+  const cls = p => F(p) > 0 ? 0 : 1;
+  // boundary samples for exact distances
+  const bpts = []; { const n = 360; for (let j = 0; j <= n; j++) for (let i = 0; i < n; i++) { const a = [-2.6 + 5.2 * i / n, -2 + 4 * j / n], b = [-2.6 + 5.2 * (i + 1) / n, a[1]], c = [a[0], -2 + 4 * (j + 1) / n]; if (cls(a) !== cls(b)) bpts.push([(a[0] + b[0]) / 2, a[1]]); if (cls(a) !== cls(c)) bpts.push([a[0], (a[1] + c[1]) / 2]); } }
+  const rad = p => bpts.reduce((m, q) => Math.min(m, Math.hypot(q[0] - p[0], q[1] - p[1])), Infinity);
+  // a certificate is a conservative lower bound on the distance to the boundary: here 85% of it, capped at 0.6
+  const R = pts.map(p => Math.min(0.85 * rad(p), 0.6));
+  const rays = Array.from({ length: 8 }, (_, k) => (Math.PI / 8) + k * Math.PI / 4);
+  function panel(cv, mode) {
+    const P = plane(cv, [-2.4, 2.4], [-1.9, 1.9], 8); P.xr = [-2.8, 2.8]; P.yr = [-2.2, 2.2]; fieldImage(P, F); P.xr = [-2.4, 2.4]; P.yr = [-1.9, 1.9];
+    boundary(P, F, css('--ink'), 1.8); const { ctx, X, Y } = P; const res = { pass: 0, fooledHidden: 0, cert: 0 };
+    ctx.save(); ctx.beginPath(); ctx.rect(X(-2.4), Y(1.9), X(2.4) - X(-2.4), Y(-1.9) - Y(1.9)); ctx.clip();
+    pts.forEach((p, i) => {
+      const col = p[2] ? css('--c2') : css('--data');
+      if (mode === 'emp') {
+        // orange where the eps-ball is on the wrong side
+        const nx = 48; for (let a = 0; a < nx; a++) for (let b = 0; b < nx; b++) { const q = [p[0] - eps + 2 * eps * (a + .5) / nx, p[1] - eps + 2 * eps * (b + .5) / nx]; if ((q[0] - p[0]) ** 2 + (q[1] - p[1]) ** 2 > eps * eps) continue; if (cls(q) !== p[2]) { ctx.fillStyle = alpha(css('--noise'), .55); ctx.fillRect(X(q[0]) - P.s * eps / nx, Y(q[1]) - P.s * eps / nx, 2 * P.s * eps / nx + .6, 2 * P.s * eps / nx + .6); } }
+        ctx.setLineDash([4, 4]); ctx.strokeStyle = alpha(css('--muted'), .9); ctx.lineWidth = 1.2; ctx.beginPath(); ctx.arc(X(p[0]), Y(p[1]), eps * P.s, 0, 7); ctx.stroke(); ctx.setLineDash([]);
+        let passed = true;
+        rays.forEach(t => { const q = [p[0] + eps * Math.cos(t), p[1] + eps * Math.sin(t)], bad = cls(q) !== p[2]; if (bad) passed = false; ctx.strokeStyle = bad ? css('--noise') : css('--muted'); ctx.lineWidth = 1.6; const x = X(q[0]), y = Y(q[1]); ctx.beginPath(); ctx.moveTo(x - 3, y - 3); ctx.lineTo(x + 3, y + 3); ctx.moveTo(x - 3, y + 3); ctx.lineTo(x + 3, y - 3); ctx.stroke(); });
+        if (passed) { res.pass++; if (rad(p) < eps) res.fooledHidden++; }
+        dot(ctx, X(p[0]), Y(p[1]), 5, col, passed ? css('--surface') : css('--noise'), 1.8);
+      } else {
+        const ok = R[i] >= eps; if (ok) res.cert++;
+        ctx.strokeStyle = css('--model'); ctx.lineWidth = ok ? 2.2 : 1.4; ctx.fillStyle = alpha(css('--model'), ok ? .12 : .05); ctx.beginPath(); ctx.arc(X(p[0]), Y(p[1]), R[i] * P.s, 0, 7); ctx.fill(); ctx.stroke();
+        ctx.setLineDash([4, 4]); ctx.strokeStyle = alpha(css('--muted'), .8); ctx.lineWidth = 1; ctx.beginPath(); ctx.arc(X(p[0]), Y(p[1]), eps * P.s, 0, 7); ctx.stroke(); ctx.setLineDash([]);
+        dot(ctx, X(p[0]), Y(p[1]), 5, col, ok ? css('--model') : css('--surface'), 1.8);
+      }
+    });
+    ctx.restore(); return res;
+  }
+  const draw = onRedraw(() => {
+    const a = panel(ce, 'emp'), b = panel(cc, 'cert');
+    readout($('#a5c-read'), [`\\epsilon = ${fmt(eps, 2)}`, `\\text{passed the attack test: } ${a.pass}/${pts.length}`, `\\text{of which still vulnerable: } ${a.fooledHidden}`, `\\text{certified } (r \\ge \\epsilon)\\text{: } ${b.cert}/${pts.length}`]);
+  });
+  $('#a5c-e').addEventListener('input', e => { eps = +e.target.value / 100; $('#a5c-eo').textContent = eps.toFixed(2); draw(); });
+  $('#a5c-eo').textContent = eps.toFixed(2); draw();
 })();
 
 // ---------- Q1: white-box, black-box and transfer evasion ----------
